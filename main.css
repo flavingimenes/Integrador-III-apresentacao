@@ -1,0 +1,618 @@
+/* main.css */
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'font-apple-bold';
+  src: url(fonte/sf-pro-display/SFPRODISPLAYBOLD.OTF) format('truetype');
+}
+@font-face {
+  font-family: 'font-apple-bold-italic';
+  src: url(fonte/sf-pro-display/SFPRODISPLAYBLACKITALIC.OTF) format('truetype');
+}
+@font-face {
+  font-family: 'font-apple-medium';
+  src: url(fonte/sf-pro-display/SFPRODISPLAYMEDIUM.OTF) format('truetype');
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modo escuro */
+body.dark-mode {
+  background-color: #242629;
+  color: #d6e22ec9;
+}
+
+/* Container principal */
+.container {
+  width: 600px;
+  margin: auto;
+  margin-bottom: 40px;
+  padding: 20px 10px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+
+body.dark-mode .container {
+  background-color: #101010;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+}
+
+.container-relato {
+  width: 600px;
+  margin: auto;
+  margin-bottom: 40px;
+  padding: 20px 10px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+
+body.dark-mode .container-relato {
+  background-color: #101010;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+}
+
+/* Títulos */
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: 'font-apple-bold-italic', sans-serif;
+}
+
+/* Formulário geral */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Field-group para Nome + Anônimo */
+.field-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Campo Nome */
+#inputNome {
+  flex: 1;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.3s, background-color 0.3s;
+  background-color: #D9D9D9;
+}
+
+#inputNome:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fafafa;
+}
+
+body.dark-mode #inputNome {
+  background-color: #2a2a2a;
+  border-color: #555;
+  color: #f0f0f0;
+  
+}
+
+body.dark-mode #inputNome:focus {
+  background-color: #333;
+}
+
+/* Estilo extra para sinalizar readonly (opcional) */
+#inputNome.readonly-style {
+  background-color: #e9ecef;
+  color: #495057;
+  cursor: not-allowed;
+}
+
+body.dark-mode #inputNome.readonly-style {
+  background-color: #3a3a3a;
+  color: #bbb;
+}
+
+/* Botão Anônimo */
+.btn-anonimo {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+  font-family: 'font-apple-medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.btn-anonimo:hover {
+  background-color: #5a6268;
+}
+
+.btn-anonimo:focus {
+  outline: none;
+}
+
+/* Inputs e textarea (além de Nome) */
+input[type="text"]:not(#inputNome),
+textarea {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border 0.3s, background-color 0.3s;
+  background-color: #D9D9D9;
+}
+
+input:not(#inputNome):focus,
+textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fafafa;
+}
+
+body.dark-mode input:not(#inputNome),
+body.dark-mode textarea {
+  background-color: #2a2a2a;
+  border-color: #555;
+  color: #f0f0f0;
+}
+
+body.dark-mode input:not(#inputNome):focus,
+body.dark-mode textarea:focus {
+  background-color: #333;
+}
+
+/* Botão alternar modo (Switch) */
+  header{
+    height: 60px;
+    background-color: #282828;
+    align-content: center;
+    margin-bottom: 25px;
+  }
+
+  header > a{
+    color: white;
+    margin-left: 15px;
+  }
+
+  .botao-troca{
+    display: inline-flex;
+    float: right;
+    color: white;
+    gap: 10px;
+    align-items: center;
+  }
+  .toggle-mode {
+      width: 50px;
+      height: 29px;
+      background-color: #000000cf;
+      border: 2px solid #d0e246;
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+      align-self: flex-end;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .toggle-mode .toggle-handle {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .toggle-mode.active {
+      background-color: #d0e246;
+      border-color: #000000cf;
+    }
+    .toggle-mode.active .toggle-handle {
+      transform: translateX(24px);
+    }
+    .toggle-mode .texto-modo {
+      font-size: 0.7rem;
+      font-weight: bold;
+      right: -90px; /* ajusta para ficar fora do “switch” */
+      color: inherit;
+      user-select: none;
+    }
+    body.dark-mode .botao-troca{
+      color: yellow;
+    }
+
+/* Botão SAIR */
+.sair {
+  background-color: #b15213;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  padding: 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 74px;
+  height: 39px;
+  margin-left: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.sair:hover {
+  background-color: #8a2d09;
+  transform: translateY(-2px);
+}
+
+/* Input file customizado */
+.custom-file-upload {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #D4D494;
+  color: black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  user-select: none;
+  text-align: center;
+  font-family: 'font-apple-medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: larger;
+  box-shadow: rgb(0 0 0 / 35%) 1px 4px 4px 0px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+
+.custom-file-upload:hover {
+  background-color: #b6b674;
+  transform: scale(1.03);
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+/* Botões de câmera */
+.camera-btn {
+  background-color: #D4D494;
+  color: black;
+  border: none;
+  padding: 12px 35px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+  font-family: 'font-apple-medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: larger;
+  box-shadow: rgb(0 0 0 / 35%) 1px 4px 4px 0px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.camera-btn:hover {
+  background-color: #b6b674;
+  transform: translateY(-2px);
+}
+
+/* Preview da imagem */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+/* Inverte (espelha) apenas as imagens capturadas pela câmera */
+.preview-container.invert-camera img {
+  transform: scaleX(1);
+}
+
+/* Botão de remover imagem no preview */
+.btn-remover {
+  color: black;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  height: 44px;
+  width: 200px;
+  background-color: rgb(240, 111, 111);
+  border-radius: 15px;
+  font-family: 'font-apple-bold', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+
+.btn-remover:hover {
+  color: #720e0e;
+}
+
+/* Botão de enviar (Cadastrar) */
+.btn-submit {
+  background-color: black;
+  color: rgb(228, 228, 44);
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+  font-family: 'font-apple-medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: larger;
+  border: solid;
+  box-shadow: rgb(0 0 0 / 35%) 1px 4px 4px 0px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.btn-submit:hover {
+  background-color: #000000d2;
+  transform: translateY(-2px);
+}
+
+/* Lista de relatos */
+#listaPessoas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Card de cada relato */
+#listaPessoas li {
+  background-color: #D9D9D9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+  border-radius: 20px;
+  padding-bottom: 0px;
+}
+
+#relato{
+  text-align: center;
+}
+
+body.dark-mode #listaPessoas li {
+  background-color: #2a2a2a;
+  border-color: #444;
+  color: #eeeeee;
+}
+
+#listaPessoas li strong {
+  padding: 15px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+#listaPessoas li p {
+  padding: 15px;
+  font-family: 'font-apple-medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#listaPessoas li img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+}
+
+/* Botão de exclusão dentro do card */
+.delete-btn {
+  align-self: flex-end;
+  margin: 10px 10px 10px 0;
+  padding: 8px 16px;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Botões de votação */
+.votacao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  padding-left: 18px;
+  background-color: #b7b5b5;
+  border-radius: 20px 20px 0px 0px;
+  font-size: x-large;
+}
+
+.votacao-bottom {
+  width: auto;
+  height: 57px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  padding-left: 18px;
+  background-color: #b7b5b5;
+  border-radius: 0px 0px 20px 20px;
+  font-size: x-large;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  justify-content: flex-end;
+}
+
+body.dark-mode .votacao {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .votacao-bottom {
+  background-color: #3a3a3a;
+}
+
+.btn-voto {
+  background: none;
+  border: none;
+  font-size: 1.9rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.btn-voto:hover {
+  color: #007bff;
+}
+
+.score {
+  font-weight: bold;
+}
+
+/*----------------------------
+  Pop-up da câmera (overlay)
+-----------------------------*/
+.camera-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.camera-content {
+  background: #fff;
+  padding: 35px 20px 20px 20px;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+  max-width: 90%;
+}
+
+/* Vídeo ao vivo espelhado para o usuário */
+.camera-content video {
+  width: 100%;
+  border-radius: 10px;
+  transform: scaleX(-1);
+  padding: 15px 0;
+}
+
+/* Botão de fechar pop-up */
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-popup:hover {
+  color: red;
+}
+
+/* Botão de capturar dentro do pop-up */
+#btnCapturarFoto {
+  padding: 12px 35px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+#btnCapturarFoto:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+video.mirror {
+  transform: scaleX(-1);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  body {
+    background-color: #D9D9D9;
+  }
+
+  .container{
+    width: auto;
+    margin: 10px 8px;
+  }
+
+  .container-relato{
+    width: auto;
+    margin: 10px 8px;
+  }
+
+  .toggle-mode {
+
+  }
+
+  .botao-troca{
+    padding-top: 1%;
+  }
+
+  #listaPessoas li p {
+    padding: 10px;
+  }
+
+  .delete-btn {
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 1400px){
+
+  .position-monitor-flex{
+  display: flex;
+  }
+
+  .container{
+    margin: 10px;
+    margin-left: 80px;
+    height: 100%;
+  }
+
+  .container-relato{
+    margin-left: 150px;
+  }
+
+}

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ayda</title>
+<link rel="stylesheet" href="index.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <header class="header" id="inicio">
+  <div class="logo"><img src="imagens/logo-ayda.jpg" alt="logo-glados" class="logo-glados">Ayda</div>
+  <h1><strong class="amarelo">Conheça</strong> Ayda.</h1>
+  <p>Rápido. <strong class="amarelo">Prático.</strong><br>Relato. <strong class="amarelo">Ação.</strong> Progresso.</p>
+  <div class="btn-group">
+    <a href="#" class="btn">SAIBA MAIS</a>
+    <button id="open-login" class="btn-login">ENTRAR<span class="material-symbols-outlined">
+login
+</span></button>
+  </div>
+</header>
+<div class="separator"></div>
+<section class="section" id="servicos">
+  <h2>Nossa Proposta</h2>
+  <div class="features">
+    <div class="feature">
+      <div class="icon"> 
+        <span class="material-symbols-outlined">
+        add_a_photo
+        </span> 
+    </div>
+      <h3>Relato</h3>
+      <p>Tire uma foto do problema ou nos envie uma e deixe registrada junto de uma breve descrição.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">
+        <span class="material-symbols-outlined">
+        match_case
+        </span>
+    </div>
+      <h3>Narrativa</h3>
+      <p>Deixe junto da sua foto uma curta descrição do problema para que possam entender e solucionar o quanto antes.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">
+        <span class="material-symbols-outlined">
+        exposure_plus_1
+        </span>
+    </div>
+      <h3>Decisão</h3>
+      <p>Ordene os relatos votando várias vezes ajudando a decidir qual a prioridade a ser solucionada.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">
+        <span class="material-symbols-outlined">
+        mobile_camera
+        </span>
+    </div>
+      <h3>Praticidade</h3>
+      <p>Ajude a comunidade de forma prática, apenas tire uma foto com seu celular e envie.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">
+        <span class="material-symbols-outlined">
+        monitoring
+        </span>
+    </div>
+      <h3>Progresso</h3>
+      <p>Participe de uma melhora geral da estrutura da sua região, cada relato faz a diferença!</p>
+    </div>
+  </div>
+</section>
+<div class="caution"></div> 
+
+<div class="carrossel">
+  <div class="carrossel-wrapper">
+    <div class="tag">
+      <span class="material-symbols-outlined">
+        keyboard_double_arrow_up
+      </span>
+      MAIS RELEVANTES
+    </div>
+
+    <!-- Container que desliza -->
+    <div class="carrossel-slides">
+      <!-- Slide 1 -->
+      <div class="slide">
+        <div class="texto">
+          <h3>“Anônimo”</h3>
+          <p>
+            -  Rua Mar Cáspio, 15, Parque Atlântico.<br>
+            Buraco atrapalhando a circulação dos carros na rua
+          </p>
+        </div>
+        <div class="imagem">
+          <img src="imagens/buraco-na-via.jpg" alt="Buraco na rua" />
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide">
+        <div class="texto">
+          <h3>“João Silva”</h3>
+          <p>
+            - Avenida das Flores, 120, Centro.<br>
+            Poste de iluminação quebrado há semanas. Precisa de reparo urgente!
+          </p>
+        </div>
+        <div class="imagem">
+          <img src="imagens/poste-quebrado.jpg" alt="Poste quebrado" />
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide">
+        <div class="texto">
+          <h3>“Maria Oliveira”</h3>
+          <p>
+            - Rua das Laranjeiras, 45, Bairro Alto.<br>
+            Calçada esburacada, perigo para pedestres e cadeirantes.
+          </p>
+        </div>
+        <div class="imagem">
+          <img src="imagens/buraco-calcada.jpg" alt="Buraco na calçada" />
+        </div>
+      </div>
+    </div> <!-- Fim de .carrossel-slides -->
+
+    <!-- Indicadores (bolinhas) -->
+    <div class="indicators">
+      <div class="dot active" data-index="0"></div>
+      <div class="dot" data-index="1"></div>
+      <div class="dot" data-index="2"></div>
+    </div>
+  </div> <!-- Fim de .carrossel-wrapper -->
+</div> <!-- Fim da div externa -->
+
+
+
+<article id="sobre">
+  <div class="titulo" >Sobre Nós</div>
+
+    <div class="abas">
+      <div id="tab-ayda" class="ativo">AYDA</div>
+      <div id="tab-visual">VISUAL</div>
+    </div>
+
+  <div class="sobre-nos">
+
+  <div class="conteudo">
+    <!-- TEXTOS SOBRE NOS -->
+    <div id="painel-ayda" class="painel ativo">
+      <h4>Quem Somos (AYDA)</h4>
+      <p>Somos a <strong>Ayda</strong>, uma plataforma inovadora dedicada a transformar a forma como cidadãos, empresas e órgãos públicos colaboram para manter nossos espaços urbanos em perfeito funcionamento. Acreditamos que cada pessoa tem o poder de contribuir para a melhoria da sua cidade, e é esse propósito que nos move: facilitar o relato de problemas em vias, praças, parques, prédios públicos e demais áreas de convivência, de modo rápido, transparente e eficiente.</p><br>
+
+      <h4>Nossa missão</h4>
+      <p>Na Ayda, entendemos que pequenas falhas — como buracos em ruas, iluminação pública deficiente, entulho irregular ou equipamentos urbanos danificados — afetam diretamente a qualidade de vida de todos. Por isso, criamos um ambiente amigável e acessível, onde qualquer usuário pode registrar ocorrências em poucos cliques: basta informar a localização, descrever o problema e anexar uma foto. Em seguida, a equipe responsável, seja municipal ou de gestão privada, recebe a notificação e pode agir de forma ágil, evitando que pequenas demandas se tornem transtornos maiores.</p><br>
+
+      <h4>O que oferecemos</h4>
+
+      <p>
+      <strong>Interface intuitiva:</strong> desenvolvemos um painel web e um aplicativo móvel (Android e iOS) que orienta o cidadão passo a passo para o registro das ocorrências;<br><br>
+
+      <strong>Sistema de relevância:</strong> ao publicar seu relato, vote na relevância do mesmo ou veja as outras publicações ja existentes e participe da votação. Quantos mais votos, mais destaque terá;<br><br>
+
+      <strong>Acompanhamento em tempo real:</strong> usuários podem acompanhar as publicações de outros usuários em tempo real, vendo qual tem mais relevancia e necessidade que tenha um reparo;<br><br>
+
+      <strong>Central de relatórios e estatísticas:</strong> autoridades e gestores públicos contam com dashboards completos, que apresentam principais tipos de problemas e áreas mais críticas, auxiliando na priorização de ações.
+      </p><br>
+
+      <h4>Nossos valores</h4>
+
+      <p>
+      <strong>Transparência:</strong> toda etapa do processo é registrada e auditável. O cidadão vê quando seu reporte foi recebido, validado e solucionado. <br><br>
+
+      <strong>Colaboração:</strong> aproximamos comunidade e poder público, valorizando a participação ativa de cada indivíduo para construir cidades mais seguras e funcionais. <br><br>
+
+      <strong>Inovação:</strong> investimos constantemente em tecnologia de ponta, garantindo que a Ayda esteja sempre atualizada com recursos de georreferenciamento, inteligência de dados e integrações com sistemas de gestão municipais. <br><br>
+
+      <strong>Empatia:</strong> entendemos que quem reporta um problema deseja, acima de tudo, melhorias para seu dia a dia. Por isso, criamos fluxos de atendimento que valorizam o feedback e o reconhecimento dos cidadãos.
+      <strong></p></strong><br>
+
+      <h4>Nossa visão</h4>
+      <p>
+      Sonhamos com cidades cada vez mais conectadas, onde problemas urbanos deixem de se acumular por falta de comunicação. Acreditamos que, quando as pessoas passam a ser protagonistas na zeladoria do próprio bairro, todo o entorno melhora: as autoridades públicas ganham informações valiosas para definir prioridades e as empresas prestadoras de serviços podem agir com maior assertividade.
+      Com a <strong>Ayda</strong>, queremos construir um ambiente colaborativo, em que cada denúncia seja um passo em direção a ruas mais seguras, praças mais limpas e espaços públicos que sirvam verdadeiramente a todos. Junte-se a nós e faça parte desse movimento de transformação: juntos, vamos reinventar a maneira de cuidar da nossa cidade!
+      </p><br>
+
+      <h4>Equipe Ayda</h4>
+      <p>Por trás da plataforma, um time multidisciplinar de desenvolvedores, designers, entusiastas em urbanismo e atendimento ao cidadão que trabalham diariamente para aprimorar funcionalidades, oferecer suporte e buscar parcerias estratégicas. Se você está interessado em saber mais, sugerir melhorias ou se tornar um parceiro, entre em contato conosco: <strong>o futuro das nossas cidades depende da colaboração de todos</strong>.</p>
+      
+      <div class="social-icons">
+        <a href="https://www.instagram.com/flavio_gabrielll/"target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram" id="instagram"></i>
+        </a>
+
+        <a href="https://x.com/FlaviioGabriell" target="_blank" aria-label="Twitter">
+        <i class="fa-brands fa-x-twitter"></i>
+        </a>
+
+        <a href="https://wa.me/5565999527412" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp" id="whattsap"></i>
+        </a>
+      </div>
+        <div class="footer-ayda"> <img src="imagens/logo-ayda-branco.png" alt="logo-ayda"> <p>Ayda</p>
+        </div>
+      </div>
+  
+      <!-- Painel VISUAL -->
+      <div id="painel-visual" class="painel">
+        <h4>Nosso Estilo Visual</h4>
+        <p>
+          Na <strong>Ayda</strong>, nossa identidade visual foi pensada para transmitir clareza, modernidade e facilidade de uso. Com um fundo branco, reforçamos a sensação de amplitude e leveza em cada espaço da interface. Essa base neutra permite que os elementos fundamentais da marca, <strong>preto</strong> e o <strong class="amarelotxt">amarelo</strong> ganhem destaque de forma equilibrada e funcional. 
+        </p>
+        <p>
+          A base do nosso visual é o fundo branco, que transmite leveza, organização e limpeza, tornando a navegação simples e intuitiva. Sobre esse fundo, as cores principais , <strong>preto</strong> e <strong class="amarelotxt">amarelo</strong>  ganham destaque propositalmente, com uma <strong>mensagem clara: ação e atenção.</strong>
+          <br>
+          Essas cores não foram escolhidas por acaso.
+          O <strong class="amarelotxt">amarelo</strong>, vibrante e chamativo, é usado mundialmente em sinalizações de alerta, faixas de segurança, obras e reformas. Ele chama o olhar, orienta e diz: <strong>“olhe aqui, algo precisa de atenção”.</strong>
+          O <strong>preto</strong>, quando combinado com o <strong class="amarelotxt">amarelo</strong>, reforça o contraste e evoca imediatamente o universo da engenharia, manutenção e construção civil — reforçando a ideia de que estamos lidando com algo sério, que exige estrutura e resposta.
+          <br>
+          Essa combinação, comum em capacetes de obra, faixas de interdição e placas de sinalização, comunica visualmente que a Ayda é uma plataforma de ação urbana: aqui se identifica o problema para começar a solução.
+          <br>
+          Além do impacto simbólico, a paleta também oferece excelente legibilidade e acessibilidade. O branco garante uma tela limpa; o <strong>preto</strong> facilita a leitura; e o <strong class="amarelotxt">amarelo</strong> destaca botões, avisos e interações importantes — tudo isso com contraste suficiente para funcionar em qualquer dispositivo ou ambiente de luz.
+        </p>
+        <div class="image-fita"></div>
+    </div>
+  </div>
+</article>
+<aside class="como-usar">
+ <h1>COMO USAR?</h1>
+ <p>
+  <strong> PASSO 1 -</strong> Tire uma foto com seu celular do problema ou 
+      selecione da sua galeria. <br><br>
+
+
+  <strong>PASSO 2 -</strong> Coloque seu nome ou deixe anônimo, como
+      preferir. <br><br>
+
+
+  <strong>PASSO 3 -</strong>Descreva oque esta acontecendo, para um melhor entendimento e facilitar o concerto do problema.   <br><br>
+
+
+  <strong>PASSO 4 -</strong>Por fim, adicione sua localização escrita e junto de alguma referência, para facilitar a localização.<br>
+ </p>
+  <a href="como-usar.html" class="como-usar-a">SAIBA MAIS <span class="material-symbols-outlined">&ensp;east</span>
+  </a>    
+</aside>
+<!-- HTML do Footer -->
+<footer class="site-footer">
+  <div class="footer-container">
+    <nav class="footer-nav">
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+      </ul>
+    </nav>
+
+
+    <div class="footer-social">
+      <div class="footer-logo"><img src="imagens/logo-ayda-png.png" alt="logo-ayda"> <p>Ayda</p></div>
+
+      <a href="https://www.instagram.com/flavio_gabrielll/"target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+        </a>
+
+        <a href="https://x.com/FlaviioGabriell" target="_blank" aria-label="Twitter">
+        <i class="fa-brands fa-x-twitter"></i>
+        </a>
+
+        <a href="https://wa.me/5565999527412" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        </a>
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-copy">
+      <p>Projeto Extensionista Integrador: Prototipagem de Soluções e Artefatos. <br> 2025, 3º Semestre</p>
+    </div>
+  </div>
+</footer>
+
+
+  
+
+
+
+
+<!-- ESTRUTURA DO POP-UP DE LOGIN -->
+<div id="login-modal" class="modal-backdrop">
+  <div class="modal-content login-box">
+    <button class="modal-close" id="close-login">&times;</button>
+    <h2>Autenticação</h2>
+    <a href="main.html">MAIN</a>
+    <div id="message" class="message"></div>
+
+    <!-- Formulário de Login -->
+    <form id="login-form" style="display:flex; flex-direction:column;">
+      <input type="text" id="login-identifier" placeholder="E-mail ou Nome de usuário" required />
+      <input type="password" id="login-password" placeholder="Senha" required />
+      <input type="submit" value="Entrar" />
+    </form>
+
+    <!-- Formulário de Cadastro -->
+    <form id="register-form" style="display:none; flex-direction:column;">
+      <input type="text" id="register-username" placeholder="Nome de usuário" required />
+      <input type="email" id="register-email" placeholder="E-mail" required />
+      <input type="password" id="register-password" placeholder="Senha" required />
+      <input type="password" id="register-confirm" placeholder="Confirmar Senha" required />
+      <input type="submit" value="Cadastrar" />
+    </form>
+
+    <p>——— ou  ———</p>
+
+    <!-- Login com Google -->
+    <div id="google-login">
+      <div id="g_id_onload"
+        data-client_id="760527345403-gvthlq5bnv4aqh58uhnksn5inmbis5vr.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="handleCredentialResponse"
+        data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+        data-type="standard"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-size="large">
+      </div>
+    </div>
+
+    <!-- Toggle between login and register -->
+    <p id="toggle-text">Não possui conta? <a href="#" id="toggle-link">Cadastrar</a></p>
+  </div>
+</div>
+
+<script>
+  const API_BASE = 'http://localhost:3000';
+  const openBtn = document.getElementById('open-login');
+  const closeBtn = document.getElementById('close-login');
+  const modal   = document.getElementById('login-modal');
+
+  openBtn.addEventListener('click', () => modal.classList.add('active'));
+  closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.classList.remove('active');
+  });
+
+  const loginForm    = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const messageBox   = document.getElementById('message');
+  const toggleText   = document.getElementById('toggle-text');
+
+  function showMessage(type, text) {
+    messageBox.className = 'message ' + type;
+    messageBox.textContent = text;
+    messageBox.style.display = 'block';
+    setTimeout(() => { messageBox.style.display = 'none'; }, 5000);
+  }
+
+  function handleToggle(e) {
+    e.preventDefault();
+    const title = document.querySelector('.login-box h2');
+    if (loginForm.style.display !== 'none') {
+      loginForm.style.display    = 'none';
+      registerForm.style.display = 'flex';
+      toggleText.innerHTML       = 'Já possui conta? <a href="#" id="toggle-link">Login</a>';
+      title.textContent          = 'Cadastro';
+    } else {
+      registerForm.style.display = 'none';
+      loginForm.style.display    = 'flex';
+      toggleText.innerHTML       = 'Não possui conta? <a href="#" id="toggle-link">Cadastrar</a>';
+      title.textContent          = 'Autenticação';
+    }
+    document.getElementById('toggle-link').addEventListener('click', handleToggle);
+    messageBox.style.display = 'none';
+  }
+
+  document.getElementById('toggle-link').addEventListener('click', handleToggle);
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const identifier = document.getElementById('login-identifier').value;
+    const password   = document.getElementById('login-password').value;
+    try {
+      const res  = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ identifier, password })
+      });
+      const text = await res.text();
+      if (!res.ok) throw new Error(text);
+      showMessage('success', 'Login bem-sucedido!');
+      setTimeout(() => window.location.href = 'main.html', 800);
+    } catch (err) {
+      showMessage('error', err.message || 'Falha no login.');
+    }
+  });
+
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('register-username').value;
+    const email    = document.getElementById('register-email').value;
+    const password = document.getElementById('register-password').value;
+    const confirm  = document.getElementById('register-confirm').value;
+    if (password !== confirm) return showMessage('error', 'Senhas não coincidem.');
+    try {
+      const res  = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, email, password })
+      });
+      const text = await res.text(); if (!res.ok) throw new Error(text);
+      showMessage('success', 'Cadastro realizado!');
+      setTimeout(() => handleToggle(new Event('click')), 500);
+    } catch (err) {
+      showMessage('error', err.message || 'Falha no cadastro.');
+    }
+  });
+
+  async function handleCredentialResponse(response) {
+    try {
+      const res  = await fetch(`${API_BASE}/auth/google`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ token: response.credential })
+      });
+      const text = await res.text(); if (!res.ok) throw new Error(text);
+      showMessage('success', 'Login Google bem-sucedido!');
+      setTimeout(() => window.location.href = 'main.html', 1000);
+    } catch (err) {
+      showMessage('error', err.message || 'Login Google falhou.');
+    }
+  }
+
+
+
+  // ===== Seleciona elementos =====
+  const slidesContainer = document.querySelector(".carrossel-slides");
+  const allSlides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  let currentIndex = 0;
+  const intervalo = 5000;
+  const totalSlides = allSlides.length;
+
+  function showSlide(n) {
+    slidesContainer.style.transform = `translateX(${-n * 100}%)`;
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[n].classList.add("active");
+    currentIndex = n;
+  }
+
+  function nextSlide() {
+    let proximo = currentIndex + 1;
+    if (proximo >= totalSlides) proximo = 0;
+    showSlide(proximo);
+  }
+
+  function prevSlide() {
+    let anterior = currentIndex - 1;
+    if (anterior < 0) anterior = totalSlides - 1;
+    showSlide(anterior);
+  }
+
+  // Inicia o carrossel automaticamente
+  let carouselInterval = setInterval(nextSlide, intervalo);
+
+  // Clique nas bolinhas (.dot)
+  dots.forEach(dot => {
+    dot.addEventListener("click", () => {
+      const idx = parseInt(dot.getAttribute("data-index"), 10);
+      showSlide(idx);
+      clearInterval(carouselInterval);
+      carouselInterval = setInterval(nextSlide, intervalo);
+    });
+  });
+
+  // Pausa ao passar o mouse por cima
+  const wrapper = document.querySelector(".carrossel-wrapper");
+  wrapper.addEventListener("mouseenter", () => {
+    clearInterval(carouselInterval);
+  });
+  wrapper.addEventListener("mouseleave", () => {
+    carouselInterval = setInterval(nextSlide, intervalo);
+  });
+
+  // ====== Suporte a gestos de toque ======
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  wrapper.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  wrapper.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+  });
+
+  function handleGesture() {
+    const delta = touchEndX - touchStartX;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(delta) > minSwipeDistance) {
+      if (delta < 0) {
+        // deslizou para a esquerda → próximo slide
+        nextSlide();
+      } else {
+        // deslizou para a direita → slide anterior
+        prevSlide();
+      }
+      clearInterval(carouselInterval);
+      carouselInterval = setInterval(nextSlide, intervalo);
+    }
+  }
+
+  // ===== Abas AYDA / VISUAL =====
+  const tabAyda = document.getElementById("tab-ayda");
+  const tabVisual = document.getElementById("tab-visual");
+  const painelAyda = document.getElementById("painel-ayda");
+  const painelVisual = document.getElementById("painel-visual");
+
+  function ativarAyda() {
+    tabAyda.classList.add("ativo");
+    tabVisual.classList.remove("ativo");
+    painelAyda.classList.add("ativo");
+    painelVisual.classList.remove("ativo");
+  }
+
+  function ativarVisual() {
+    tabAyda.classList.remove("ativo");
+    tabVisual.classList.add("ativo");
+    painelAyda.classList.remove("ativo");
+    painelVisual.classList.add("ativo");
+  }
+
+  // Adicione os event listeners das abas (se ainda não tiver feito)
+  tabAyda.addEventListener("click", ativarAyda);
+  tabVisual.addEventListener("click", ativarVisual);
+
+
+  // Aguarda o carregamento completo do DOM
+  document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona o botão “SAIBA MAIS” (classe .btn)
+    const btnSaibaMais = document.querySelector('.btn');
+    // Seleciona a seção “Sobre Nós”
+    const secaoSobreNos = document.querySelector('.sobre-nos');
+
+    if (btnSaibaMais && secaoSobreNos) {
+      btnSaibaMais.addEventListener('click', function(evento) {
+        evento.preventDefault(); // Cancela o comportamento padrão do <a href="#">
+        // Faz o scroll suave até a seção
+        secaoSobreNos.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const destino = document.querySelector(this.getAttribute('href'));
+      if (destino) {
+        destino.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+</script>
+</body>
+</html>
