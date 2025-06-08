@@ -191,7 +191,7 @@
       height: 30px;
     }
 
-
+    
 
 
 
@@ -665,6 +665,18 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+  
+  .entrar {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #4285f4;
+    color: white;
+    cursor: pointer;
+    font-family: 'font-apple-bold', Arial, Helvetica, sans-serif;
+    text-decoration: none;
+  }
+
   input[type="submit"] {
     padding: 10px;
     border: none;
@@ -673,9 +685,10 @@
     color: white;
     cursor: pointer;
     font-family: 'font-apple-bold', Arial, Helvetica, sans-serif;
+    text-decoration: none;
   }
 
-  input[type="submit"]:hover{
+  .entrar:hover{
     transform: scale(1.05);
     transition: background-color 0.3s ease, transform 0.2s ease;
     transform: scale(1.05);

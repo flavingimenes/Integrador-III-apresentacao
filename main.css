@@ -505,6 +505,7 @@ body.dark-mode .votacao-bottom {
   user-select: none;
   border-radius: 9px;
   gap: 10px;
+  color: black;
 }
 
 .botao-votacao-estilo:hover {
