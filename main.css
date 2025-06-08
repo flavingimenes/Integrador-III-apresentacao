@@ -305,6 +305,9 @@ body.dark-mode textarea:focus {
   font-family: 'font-apple-medium', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: larger;
   box-shadow: rgb(0 0 0 / 35%) 1px 4px 4px 0px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
 }
 
 .camera-btn:hover {
@@ -455,6 +458,7 @@ body.dark-mode #listaPessoas li {
   background-color: #b7b5b5;
   border-radius: 20px 20px 0px 0px;
   font-size: x-large;
+  gap: 0.7em;
 }
 
 .votacao-bottom {
@@ -488,12 +492,24 @@ body.dark-mode .votacao-bottom {
   transition: color 0.2s;
 }
 
-.btn-voto:hover {
-  color: #007bff;
-}
-
 .score {
   font-weight: bold;
+}
+
+.botao-votacao-estilo {
+  font-size: 25px;
+  font-weight: bolder;
+  background: #D4D494;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  transition: background-color 0.3s, transform 0.2s;
+  user-select: none;
+  border-radius: 9px;
+  gap: 10px;
+}
+
+.botao-votacao-estilo:hover {
+  background-color: #b6b674;
+  transform: scale(1.03);
 }
 
 /*----------------------------
@@ -592,6 +608,7 @@ video.mirror {
 
   #listaPessoas li p {
     padding: 10px;
+    border-radius: 7px;
   }
 
   .delete-btn {
@@ -612,7 +629,8 @@ video.mirror {
   }
 
   .container-relato{
-    margin-left: 150px;
+    margin-left: 13%;
+    margin-right: 4%;
   }
 
 }

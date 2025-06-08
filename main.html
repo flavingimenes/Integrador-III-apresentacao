@@ -83,7 +83,7 @@
         </label>
         <!-- Botão que abre a câmera -->
         <button type="button" class="camera-btn" id="btnAbrirCamera">
-          Tirar foto com a câmera
+          Tirar foto com a câmera <img width="24" height="24" justify-contente="center" src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="add-camera"/>
         </button>
         <!-- Preview da imagem -->
         <div class="preview-container" id="previewContainer" style="display: none;">
@@ -103,9 +103,11 @@
       aria-hidden="true"
     >
       <div class="camera-content">
-        <button type="button" class="close-popup" id="btnFecharCamera">
-          ✖
-        </button>
+        <div>
+          <button type="button" class="close-popup" id="btnFecharCamera">
+            ✖
+          </button>
+        </div>
         <video id="cameraVideo" autoplay playsinline></video>
         <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
           <button type="button" class="camera-btn" id="btnTrocarCamera">
@@ -298,15 +300,15 @@
         li.classList.add("card-pessoa");
         li.innerHTML = `
           <div class="votacao">
-            <button class="up btn-voto" data-id="${p.id}" aria-label="Curtir">🡅</button>
+            <button class="up btn-voto" data-id="${p.id}" aria-label="Curtir"><p class="botao-votacao-estilo">+1</p></button>
             <span class="score" id="score_${p.id}">${p.pontos}</span>
-            <button class="down btn-voto" data-id="${p.id}" aria-label="Descurtir">🡇</button>
+            <button class="down btn-voto" data-id="${p.id}" aria-label="Descurtir"><p class="botao-votacao-estilo">-1</p></button>
           </div>
           <strong>Usuário: ${p.nome}</strong>
           <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
           <p id="relato">${p.relato}</p>
           <p><em>Localização:</em> &ensp;${p.localizacao}</p>
-          <p><em>Criado em:</em> &ensp;${dataFormatada}</p>
+          <p>${dataFormatada}</p>
           <div class="votacao-bottom">
             <button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button>
           </div>
