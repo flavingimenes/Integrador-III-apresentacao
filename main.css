@@ -475,10 +475,6 @@ body.dark-mode #listaPessoas li {
   justify-content: space-between;
 }
 
-.hora-sidebar{
-  font-size: 14px;
-}
-
 body.dark-mode .votacao {
   background-color: #3a3a3a;
 }
