@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,6 +12,7 @@
       margin-bottom: 10px;
       margin-top: 10px;
     }
+
     li.card-pessoa {
       border: 1px solid #ccc;
       padding: 0px 0px 10px 0px;
@@ -18,30 +20,51 @@
       list-style: none;
       border-radius: 20px 20px 0px 0px;
     }
+
     .votacao {
       display: flex;
       align-items: center;
       gap: 8px;
       box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
     }
+
     .votacao .score {
       min-width: 24px;
       text-align: center;
     }
+
+    /* Estilos para o botão de like */
+    .like-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+
+    .like-btn .material-symbols-outlined {
+      font-size: 24px;
+      color: #888;
+      transition: color 0.2s ease-in-out;
+    }
+
+    .like-btn.liked .material-symbols-outlined {
+      color: #e0245e; /* cor de coração preenchido */
+    }
   </style>
 </head>
+
 <body>
-<header>
-  <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app<span></a>
-  <div class="botao-troca">
-    <span class="material-symbols-outlined">routine</span>
-    <button class="toggle-mode" id="toggleModoBtn" aria-pressed="false">
-      <span class="toggle-handle"></span>
-    </button>
-  </div>
-</header>
-  
-  
+  <header>
+    <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app<span></a>
+    <div class="botao-troca">
+      <span class="material-symbols-outlined">routine</span>
+      <button class="toggle-mode" id="toggleModoBtn" aria-pressed="false">
+        <span class="toggle-handle"></span>
+      </button>
+    </div>
+  </header>
 
   <div class="position-monitor-flex">
     <div class="container">
@@ -49,59 +72,37 @@
       <form id="formPessoa" enctype="multipart/form-data">
         <!-- Campo Nome com botão Anônimo -->
         <div class="field-group">
-          <input
-            type="text"
-            name="nome"
-            id="inputNome"
-            placeholder="Nome"
-            required
-          />
+          <input type="text" name="nome" id="inputNome" placeholder="Nome" required />
           <button type="button" class="btn-anonimo" id="btnAnonimo">
             Anônimo?
           </button>
         </div>
         <!-- Campo Relato -->
         <input type="text" name="relato" id="inputRelato" placeholder="Relato" required />
-        <!-- NOVO: Campo Localização -->
-        <input
-          type="text"
-          name="localizacao"
-          id="inputLocalizacao"
-          placeholder="Localização"
-          required
-        />
+        <!-- Campo Localização -->
+        <input type="text" name="localizacao" id="inputLocalizacao" placeholder="Referencia do local" required />
         <!-- Upload de arquivo -->
         <label class="custom-file-upload">
-          <input
-            type="file"
-            name="imagem"
-            accept="image/*"
-            id="inputImagem"
-            required
-          />
+          <input type="file" name="imagem" accept="image/*" id="inputImagem" required />
           <i class="fas fa-upload"></i> Escolher imagem
         </label>
         <!-- Botão que abre a câmera -->
         <button type="button" class="camera-btn" id="btnAbrirCamera">
-          Tirar foto com a câmera <img width="24" height="24" justify-contente="center" src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="add-camera"/>
+          Tirar foto com a câmera <img width="24" height="24" justify-contente="center"
+            src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="add-camera" />
         </button>
         <!-- Preview da imagem -->
         <div class="preview-container" id="previewContainer" style="display: none;">
           <img id="previewImagem" alt="Preview da imagem" />
           <button type="button" class="btn-remover" id="btnRemoverImagem">
-             <span class="material-symbols-outlined">delete</span>Remover imagem
+            <span class="material-symbols-outlined">delete</span>Remover imagem
           </button>
         </div>
         <button type="submit" class="btn-submit">Publicar</button>
       </form>
     </div>
     <!-- Pop-up da câmera -->
-    <div
-      id="cameraPopup"
-      class="camera-popup"
-      style="display: none;"
-      aria-hidden="true"
-    >
+    <div id="cameraPopup" class="camera-popup" style="display: none;" aria-hidden="true">
       <div class="camera-content">
         <div>
           <button type="button" class="close-popup" id="btnFecharCamera">
@@ -259,7 +260,7 @@
         localizacao: localizacao,
         imagem: imagemBase64,
         criado_em: criadoEm,
-        pontos: 0
+        pontos: 0 // comece com zero curtidas
       };
 
       pessoas.push(novoRelato);
@@ -283,49 +284,62 @@
       const armazenado = localStorage.getItem("pessoas_relato");
       let pessoas = armazenado ? JSON.parse(armazenado) : [];
 
-      // Ordena pelo maior número de pontos
+      // Ordena pelo maior número de pontos (curtidas)
       pessoas.sort((a, b) => b.pontos - a.pontos);
 
       lista.innerHTML = "";
 
+      // Recupera lista de posts curtidos neste navegador
+      const likedStored = localStorage.getItem("liked_posts");
+      const likedPosts = likedStored ? JSON.parse(likedStored) : [];
+
       pessoas.forEach((p) => {
         let dataFormatada = "";
         try {
-          dataFormatada = new Date(p.criado_em).toLocaleString("pt-BR");
+          const dataObj = new Date(p.criado_em);
+          const dia = String(dataObj.getDate()).padStart(2, '0');
+          const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+          const ano = dataObj.getFullYear();
+          const horas = String(dataObj.getHours()).padStart(2, '0');
+          const minutos = String(dataObj.getMinutes()).padStart(2, '0');
+          dataFormatada = `${dia}/${mes}/${ano} ${horas}:${minutos}`;
         } catch {
           dataFormatada = p.criado_em;
         }
+
+        // Verifica se este post já foi curtido neste navegador
+        const isLiked = likedPosts.includes(p.id);
 
         const li = document.createElement("li");
         li.classList.add("card-pessoa");
         li.innerHTML = `
           <div class="votacao">
-            <button class="up btn-voto" data-id="${p.id}" aria-label="Curtir"><p class="botao-votacao-estilo">+1</p></button>
+            <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}" data-id="${p.id}" aria-label="${isLiked ? 'Descurtir' : 'Curtir'}">
+              <span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span>
+            </button>
             <span class="score" id="score_${p.id}">${p.pontos}</span>
-            <button class="down btn-voto" data-id="${p.id}" aria-label="Descurtir"><p class="botao-votacao-estilo">-1</p></button>
           </div>
           <strong>Usuário: ${p.nome}</strong>
           <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
           <p id="relato">${p.relato}</p>
-          <p><em>Localização:</em> &ensp;${p.localizacao}</p>
-          <p>${dataFormatada}</p>
+          <p><em>Localização:</em> &ensp;${p.localizacao}</p>  
           <div class="votacao-bottom">
+            <p class="hora-sidebar">${dataFormatada}</p>
             <button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button>
           </div>
         `;
         lista.appendChild(li);
       });
 
-      // Votação: +1 ou –1
-      document.querySelectorAll(".btn-voto").forEach((btn) => {
+      // Evento de clique no botão de like
+      document.querySelectorAll(".like-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const id = Number(e.currentTarget.getAttribute("data-id"));
-          const isUp = e.currentTarget.classList.contains("up");
-          votarRelato(id, isUp);
+          toggleLike(id);
         });
       });
 
-      // Exclusão de relato
+      // Evento de exclusão de relato
       document.querySelectorAll(".delete-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const id = Number(e.currentTarget.getAttribute("data-id"));
@@ -336,31 +350,57 @@
       });
     }
 
-    // 2.5.1) Função para votar (up/down)
-    function votarRelato(id, isUp) {
+    // 2.5.1) Função para alternar curtida (Curtir/Descurtir)
+    function toggleLike(id) {
+      // Recupera relatos e posts curtidos
       const armazenado = localStorage.getItem("pessoas_relato");
       let pessoas = armazenado ? JSON.parse(armazenado) : [];
 
-      pessoas = pessoas.map((p) => {
-        if (p.id === id) {
-          let novosPontos = p.pontos + (isUp ? 1 : -1);
-          if (novosPontos < 0) novosPontos = 0;
-          return { ...p, pontos: novosPontos };
-        }
-        return p;
-      });
+      const likedStored = localStorage.getItem("liked_posts");
+      let likedPosts = likedStored ? JSON.parse(likedStored) : [];
 
+      const indexLiked = likedPosts.indexOf(id);
+      const postIndex = pessoas.findIndex((p) => p.id === id);
+      if (postIndex === -1) return; // não encontrou post
+
+      // Se já está curtido, remove a curtida
+      if (indexLiked !== -1) {
+        // Remove da lista de curtidos
+        likedPosts.splice(indexLiked, 1);
+        // Decrementa pontuação (não cai abaixo de 0)
+        pessoas[postIndex].pontos = Math.max(0, pessoas[postIndex].pontos - 1);
+      } else {
+        // Se não está curtido, adiciona curtida
+        likedPosts.push(id);
+        pessoas[postIndex].pontos = pessoas[postIndex].pontos + 1;
+      }
+
+      // Salva de volta no storage
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
+      localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
+
+      // Re-renderiza a lista
       carregarPessoas();
     }
 
     // 2.5.2) Função para excluir relato
     function excluirRelato(id) {
+      // Remove relato dos posts
       const armazenado = localStorage.getItem("pessoas_relato");
       let pessoas = armazenado ? JSON.parse(armazenado) : [];
 
       pessoas = pessoas.filter((p) => p.id !== id);
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
+
+      // Se o post estava em liked_posts, remove também de lá
+      const likedStored = localStorage.getItem("liked_posts");
+      let likedPosts = likedStored ? JSON.parse(likedStored) : [];
+      const idx = likedPosts.indexOf(id);
+      if (idx !== -1) {
+        likedPosts.splice(idx, 1);
+        localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
+      }
+
       carregarPessoas();
     }
 
