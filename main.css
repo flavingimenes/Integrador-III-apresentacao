@@ -403,12 +403,19 @@ body.dark-mode textarea:focus {
 
 #relato{
   text-align: center;
-}
+  padding-bottom: 20px;
+  width: 80%;
+  margin: auto;
+} 
 
 body.dark-mode #listaPessoas li {
   background-color: #2a2a2a;
   border-color: #444;
   color: #eeeeee;
+}
+
+.loc-text{
+  line-break: anywhere;
 }
 
 #listaPessoas li strong {
@@ -598,8 +605,8 @@ video.mirror {
     margin: 10px 8px;
   }
 
-  .toggle-mode {
-
+  #relato{
+    width: 100%;
   }
 
   .botao-troca{
@@ -609,6 +616,7 @@ video.mirror {
   #listaPessoas li p {
     padding: 10px;
     border-radius: 7px;
+    padding-bottom: 20px;
   }
 
   .delete-btn {

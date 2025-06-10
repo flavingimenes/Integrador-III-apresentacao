@@ -138,7 +138,7 @@
       toggleModoBtn.classList.add("active");
       toggleModoBtn.setAttribute("aria-pressed", "true");
     }
-
+    
     toggleModoBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
@@ -322,7 +322,7 @@
           <strong>Usuário: ${p.nome}</strong>
           <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
           <p id="relato">${p.relato}</p>
-          <p><em>Localização:</em> &ensp;${p.localizacao}</p>  
+          <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>  
           <div class="votacao-bottom" style="justify-content: space-between;">
             <p style="font-size: 14px;">${dataFormatada}</p>
             <button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button>
