@@ -25,7 +25,9 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+        rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+        rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
     }
 
     .votacao .score {
@@ -34,6 +36,7 @@
       font-weight: bold;
     }
 
+    /* Botão de like com animação */
     .like-btn {
       background: none;
       border: none;
@@ -46,11 +49,13 @@
     .like-btn .material-symbols-outlined {
       font-size: 24px;
       color: #888;
-      transition: color .2s;
+      transition: color .2s ease-in-out, transform .2s ease-in-out;
+      transform-origin: center center;
     }
 
     .like-btn.liked .material-symbols-outlined {
       color: #e0245e;
+      transform: scale(1.3);
     }
 
     /* Botão de status substituindo checkbox */
@@ -83,7 +88,6 @@
     }
 
     .status-btn:focus {
-
       box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.2);
     }
 
@@ -118,7 +122,6 @@
       width: 20px;
       height: 20px;
       border: 2px solid #ff9800;
-      /* laranja */
       border-radius: 4px;
       background-color: #d1cece;
       cursor: pointer;
@@ -142,7 +145,6 @@
 
     .status-checkbox:checked {
       background-color: #4caf50;
-      /* verde */
       border-color: #4caf50;
     }
 
@@ -159,7 +161,9 @@
 
 <body>
   <header>
-    <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app</span></a>
+    <a href="index.html">
+      <span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app</span>
+    </a>
     <div class="botao-troca">
       <span class="material-symbols-outlined">routine</span>
       <button class="toggle-mode" id="toggleModoBtn" aria-pressed="false">
@@ -183,8 +187,8 @@
           <i class="fas fa-upload"></i> Escolher imagem
         </label>
         <button type="button" class="camera-btn" id="btnAbrirCamera">
-          Tirar foto com a câmera <img width="24" height="24"
-            src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
+          Tirar foto com a câmera
+          <img width="24" height="24" src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
         </button>
         <div class="preview-container" id="previewContainer" style="display: none;">
           <img id="previewImagem" alt="Preview da imagem" />
@@ -195,22 +199,15 @@
         <button type="submit" class="btn-submit">Publicar</button>
       </form>
     </div>
-    <!-- Pop-up da câmera -->
     <div id="cameraPopup" class="camera-popup" style="display: none;" aria-hidden="true">
       <div class="camera-content">
         <div>
-          <button type="button" class="close-popup" id="btnFecharCamera">
-            ✖
-          </button>
+          <button type="button" class="close-popup" id="btnFecharCamera">✖</button>
         </div>
         <video id="cameraVideo" autoplay playsinline></video>
         <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
-          <button type="button" class="camera-btn" id="btnTrocarCamera">
-            Trocar Câmera
-          </button>
-          <button type="button" class="camera-btn" id="btnCapturarFoto">
-            Capturar
-          </button>
+          <button type="button" class="camera-btn" id="btnTrocarCamera">Trocar Câmera</button>
+          <button type="button" class="camera-btn" id="btnCapturarFoto">Capturar</button>
         </div>
       </div>
     </div>
@@ -245,101 +242,79 @@
     const previewContainer = document.getElementById("previewContainer");
     const previewImagem = document.getElementById("previewImagem");
     const btnRemoverImagem = document.getElementById("btnRemoverImagem");
-    const btnAbrirCamera = document.getElementById("btnAbrirCamera");
-    const btnFecharCamera = document.getElementById("btnFecharCamera");
-    const btnCapturarFoto = document.getElementById("btnCapturarFoto");
-    const btnTrocarCamera = document.getElementById("btnTrocarCamera");
-    const cameraPopup = document.getElementById("cameraPopup");
-    const cameraVideo = document.getElementById("cameraVideo");
-    let stream = null;
-    let videoDevices = [];
-    let currentCameraIndex = 0;
-    let currentFacingMode = null;
 
     btnAnonimo.addEventListener("click", () => {
       if (!inputNome.readOnly) {
         inputNome.value = "Anônimo";
         inputNome.readOnly = true;
         btnAnonimo.textContent = "Desfazer";
-        inputNome.classList.add("readonly-style");
       } else {
         inputNome.value = "";
         inputNome.readOnly = false;
         btnAnonimo.textContent = "Anônimo?";
-        inputNome.classList.remove("readonly-style");
-        inputNome.focus();
       }
     });
+
     inputImagem.addEventListener("change", () => {
-      previewContainer.style.display = "flex";
-      previewContainer.classList.remove("invert-camera");
       const file = inputImagem.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = e => {
           previewImagem.src = e.target.result;
+          previewContainer.style.display = "flex";
         };
         reader.readAsDataURL(file);
       }
     });
+
     btnRemoverImagem.addEventListener("click", () => {
       inputImagem.value = "";
-      previewImagem.src = "";
       previewContainer.style.display = "none";
-      previewContainer.classList.remove("invert-camera");
     });
-    form.addEventListener("submit", (e) => {
+
+    form.addEventListener("submit", e => {
       e.preventDefault();
-      if (!inputImagem.files.length && !previewImagem.src) {
-        alert("Por favor, selecione ou capture uma imagem.");
-        return;
-      }
       const file = inputImagem.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          salvarRelatoNoLocalStorage(ev.target.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        salvarRelatoNoLocalStorage(previewImagem.src);
-      }
+      if (!file) return alert("Selecione ou capture uma imagem.");
+      const reader = new FileReader();
+      reader.onload = ev => salvarRelato(ev.target.result);
+      reader.readAsDataURL(file);
     });
-    function salvarRelatoNoLocalStorage(imagemBase64) {
-      const nome = inputNome.value.trim() || "Anônimo";
-      const relato = inputRelato.value.trim();
-      const localizacao = inputLocalizacao.value.trim();
-      const criadoEm = new Date().toISOString();
+
+    function salvarRelato(imgData) {
+      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
       const id = Date.now();
-      const armazenado = localStorage.getItem("pessoas_relato");
-      const pessoas = armazenado ? JSON.parse(armazenado) : [];
-      pessoas.push({ id, nome, relato, localizacao, imagem: imagemBase64, criado_em: criadoEm, pontos: 0 });
+      pessoas.push({
+        id,
+        nome: inputNome.value || "Anônimo",
+        relato: inputRelato.value,
+        localizacao: inputLocalizacao.value,
+        imagem: imgData,
+        pontos: 0,
+        criado_em: new Date().toISOString()
+      });
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
       form.reset();
-      btnRemoverImagem.click();
-      if (inputNome.readOnly) {
-        inputNome.readOnly = false;
-        inputNome.value = "";
-        inputNome.classList.remove("readonly-style");
-        btnAnonimo.textContent = "Anônimo?";
-      }
+      previewContainer.style.display = "none";
       carregarPessoas();
     }
+
     function carregarPessoas() {
-      const armazenado = localStorage.getItem("pessoas_relato");
-      const pessoas = armazenado ? JSON.parse(armazenado) : [];
-      pessoas.sort((a, b) => b.pontos - a.pontos);
+      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]')
+        .sort((a, b) => b.pontos - a.pontos);
+      const liked = JSON.parse(localStorage.getItem("liked_posts") || '[]');
       lista.innerHTML = "";
-      const likedStored = localStorage.getItem("liked_posts");
-      const likedPosts = likedStored ? JSON.parse(likedStored) : [];
-      pessoas.forEach((p) => {
-        const isLiked = likedPosts.includes(p.id);
+
+      pessoas.forEach(p => {
+        const isLiked = liked.includes(p.id);
         const li = document.createElement("li");
-        li.classList.add("card-pessoa");
+        li.className = "card-pessoa";
         li.innerHTML = `
           <div class="votacao">
-            <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}" data-id="${p.id}" aria-label="${isLiked ? 'Descurtir' : 'Curtir'}"><span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span></button>
-            <span class="score" id="score_${p.id}">${p.pontos}</span>
+            <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${p.id}">
+              <span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span>
+            </button>
+            <span class="score">${p.pontos}</span>
             <div class="status-container">
               <input type="checkbox" class="status-checkbox" id="status_${p.id}" data-id="${p.id}" />
               <span class="status-text" id="status_text_${p.id}">em análise</span>
@@ -347,101 +322,53 @@
           </div>
           <strong>Usuário: ${p.nome}</strong>
           <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
-          <p id="relato">${p.relato}</p>
-          <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>
-          <div class="votacao-bottom" style="justify-content: space-between;"><p style="font-size: 14px;">${new Date(p.criado_em).toLocaleString('pt-BR')}</p><button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button></div>
+          <p>${p.relato}</p>
+          <p><em>${new Date(p.criado_em).toLocaleString('pt-BR')}</em></p>
         `;
         lista.appendChild(li);
       });
-      document.querySelectorAll(".like-btn").forEach((btn) =>
-        btn.addEventListener("click", (e) => toggleLike(Number(e.currentTarget.dataset.id)))
-      );
 
-      document.querySelectorAll(".delete-btn").forEach((btn) =>
-        btn.addEventListener("click", (e) => {
-          if (confirm("Tem certeza que deseja excluir este cadastro?")) {
-            excluirRelato(Number(e.currentTarget.dataset.id));
-          }
-        })
-      );
-
-      document.querySelectorAll(".status-checkbox").forEach((cb) =>
-        cb.addEventListener("change", (e) => {
-          const id = e.currentTarget.dataset.id;
-          const textEl = document.getElementById(`status_text_${id}`);
-
-          if (e.currentTarget.checked) {
-            textEl.textContent = 'resolvido!';
-            textEl.classList.add('resolved', 'status-checkbox-resolved'); // Adiciona a nova classe ao span
+      document.querySelectorAll(".like-btn").forEach(btn => {
+        btn.onclick = () => {
+          const id = Number(btn.dataset.id);
+          const span = btn.querySelector("span");
+          // Aplica o transform na hora do clique:
+          btn.classList.toggle("liked");
+          // Atualiza dados e pontuação:
+          let posts = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
+          let likes = JSON.parse(localStorage.getItem("liked_posts") || '[]');
+          const idx = likes.indexOf(id);
+          const pi = posts.findIndex(x => x.id === id);
+          if (idx > -1) {
+            likes.splice(idx, 1);
+            posts[pi].pontos = Math.max(0, posts[pi].pontos - 1);
           } else {
-            textEl.textContent = 'em análise';
-            textEl.classList.remove('resolved', 'status-checkbox-resolved'); // Remove a nova classe do span
+            likes.push(id);
+            posts[pi].pontos++;
           }
-        })
-      );
+          localStorage.setItem("pessoas_relato", JSON.stringify(posts));
+          localStorage.setItem("liked_posts", JSON.stringify(likes));
+          // Atualiza número na interface:
+          btn.nextElementSibling.textContent = posts[pi].pontos;
+        };
+      });
 
+      document.querySelectorAll(".status-checkbox").forEach(cb => {
+        cb.onchange = e => {
+          const id = cb.dataset.id;
+          const txt = document.getElementById(`status_text_${id}`);
+          if (cb.checked) {
+            txt.textContent = 'resolvido!';
+            txt.classList.add('status-checkbox-resolved');
+          } else {
+            txt.textContent = 'em análise';
+            txt.classList.remove('status-checkbox-resolved');
+          }
+        };
+      });
+    }
 
-    }
-    function toggleLike(id) {
-      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
-      let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
-      const idxLike = likedPosts.indexOf(id);
-      const postIdx = pessoas.findIndex(p => p.id === id);
-      if (postIdx < 0) return;
-      if (idxLike !== -1) { likedPosts.splice(idxLike, 1); pessoas[postIdx].pontos = Math.max(0, pessoas[postIdx].pontos - 1); }
-      else { likedPosts.push(id); pessoas[postIdx].pontos++; }
-      localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
-      localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
-      carregarPessoas();
-    }
-    function excluirRelato(id) {
-      let pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
-      pessoas = pessoas.filter(p => p.id !== id);
-      localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
-      let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
-      const idx = likedPosts.indexOf(id);
-      if (idx !== -1) { likedPosts.splice(idx, 1); localStorage.setItem("liked_posts", JSON.stringify(likedPosts)); }
-      carregarPessoas();
-    }
-    async function getVideoDevices() {
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        videoDevices = devices.filter(d => d.kind === "videoinput");
-      } catch (err) { console.error(err); }
-    }
-    async function startCamera(index) {
-      if (stream) stream.getTracks().forEach(t => t.stop());
-      try {
-        const constraints = { video: { deviceId: { exact: videoDevices[index].deviceId } }, audio: false };
-        stream = await navigator.mediaDevices.getUserMedia(constraints);
-        cameraVideo.srcObject = stream;
-        const [track] = stream.getVideoTracks();
-        currentFacingMode = track.getSettings().facingMode || null;
-        cameraVideo.style.transform = currentFacingMode === "user" ? "scaleX(-1)" : "none";
-      } catch (err) { console.error(err); alert("Não foi possível acessar a câmera."); }
-    }
-    btnAbrirCamera.addEventListener("click", async () => {
-      await getVideoDevices();
-      if (!videoDevices.length) return alert("Nenhuma câmera foi encontrada.");
-      currentCameraIndex = 0; await startCamera(currentCameraIndex);
-      btnTrocarCamera.style.display = videoDevices.length > 1 ? "inline-block" : "none";
-      cameraPopup.style.display = "flex"; cameraPopup.setAttribute("aria-hidden", "false");
-    });
-    btnFecharCamera.addEventListener("click", () => { if (stream) stream.getTracks().forEach(t => t.stop()); cameraPopup.style.display = "none"; cameraPopup.setAttribute("aria-hidden", "true"); });
-    btnTrocarCamera.addEventListener("click", async () => { if (videoDevices.length <= 1) return; currentCameraIndex = (currentCameraIndex + 1) % videoDevices.length; await startCamera(currentCameraIndex); });
-    btnCapturarFoto.addEventListener("click", () => {
-      if (!stream) return;
-      const canvas = document.createElement("canvas"); canvas.width = cameraVideo.videoWidth; canvas.height = cameraVideo.videoHeight;
-      const ctx = canvas.getContext("2d");
-      if (currentFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
-      ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(blob => {
-        const file = new File([blob], "foto.png", { type: "image/png" });
-        const dt = new DataTransfer(); dt.items.add(file); inputImagem.files = dt.files;
-        previewImagem.src = URL.createObjectURL(blob); previewContainer.classList.remove("invert-camera"); previewContainer.style.display = "flex"; btnFecharCamera.click();
-      }, "image/png");
-    });
-    window.addEventListener("DOMContentLoaded", () => carregarPessoas());
+    window.addEventListener("DOMContentLoaded", carregarPessoas);
   </script>
 </body>
 
