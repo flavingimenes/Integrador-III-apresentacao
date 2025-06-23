@@ -165,13 +165,6 @@ textarea {
   background-color: #D9D9D9;
 }
 
-input:not(#inputNome):focus,
-textarea:focus {
-  outline: none;
-  border-color: #007bff;
-  background-color: #fafafa;
-}
-
 body.dark-mode input:not(#inputNome),
 body.dark-mode textarea {
   background-color: #2a2a2a;

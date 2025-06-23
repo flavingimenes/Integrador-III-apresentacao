@@ -31,9 +31,9 @@
     .votacao .score {
       min-width: 24px;
       text-align: center;
+      font-weight: bold;
     }
 
-    /* Estilos para o botão de like */
     .like-btn {
       background: none;
       border: none;
@@ -46,18 +46,119 @@
     .like-btn .material-symbols-outlined {
       font-size: 24px;
       color: #888;
-      transition: color 0.2s ease-in-out;
+      transition: color .2s;
     }
 
     .like-btn.liked .material-symbols-outlined {
-      color: #e0245e; /* cor de coração preenchido */
+      color: #e0245e;
+    }
+
+    /* Botão de status substituindo checkbox */
+    .status-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .status-btn {
+      appearance: none;
+      background-color: #fff3e0;
+      color: #e65100;
+      border: 2px solid #e65100;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    }
+
+    .status-btn:hover {
+      background-color: #ffe0b2;
+    }
+
+    .status-btn:focus {
+
+      box-shadow: 0 0 0 3px rgba(230, 81, 0, 0.2);
+    }
+
+    .status-btn.resolved {
+      background-color: #c8e6c9;
+      color: #2e7d32;
+      border-color: #2e7d32;
+    }
+
+    .status-text {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 5px;
+      background-color: #ffebee;
+      color: #c62828;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .status-checkbox-resolved {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .status-checkbox {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ff9800;
+      /* laranja */
+      border-radius: 4px;
+      background-color: #d1cece;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .status-checkbox::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 5px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%) rotate(-45deg);
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .status-checkbox:checked {
+      background-color: #4caf50;
+      /* verde */
+      border-color: #4caf50;
+    }
+
+    .status-checkbox:checked::before {
+      opacity: 1;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
     }
   </style>
 </head>
 
 <body>
   <header>
-    <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app<span></a>
+    <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app</span></a>
     <div class="botao-troca">
       <span class="material-symbols-outlined">routine</span>
       <button class="toggle-mode" id="toggleModoBtn" aria-pressed="false">
@@ -70,32 +171,24 @@
     <div class="container">
       <h2>Divulgar Um Problema</h2>
       <form id="formPessoa" enctype="multipart/form-data">
-        <!-- Campo Nome com botão Anônimo -->
         <div class="field-group">
           <input type="text" name="nome" id="inputNome" placeholder="Nome" required />
-          <button type="button" class="btn-anonimo" id="btnAnonimo">
-            Anônimo?
-          </button>
+          <button type="button" class="btn-anonimo" id="btnAnonimo">Anônimo?</button>
         </div>
-        <!-- Campo Relato -->
         <input type="text" name="relato" id="inputRelato" placeholder="Relato" required />
-        <!-- Campo Localização -->
         <input type="text" name="localizacao" id="inputLocalizacao" placeholder="Referencia do local" required />
-        <!-- Upload de arquivo -->
         <label class="custom-file-upload">
           <input type="file" name="imagem" accept="image/*" id="inputImagem" required />
           <i class="fas fa-upload"></i> Escolher imagem
         </label>
-        <!-- Botão que abre a câmera -->
         <button type="button" class="camera-btn" id="btnAbrirCamera">
-          Tirar foto com a câmera <img width="24" height="24" justify-contente="center"
-            src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="add-camera" />
+          Tirar foto com a câmera <img width="24" height="24"
+            src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
         </button>
-        <!-- Preview da imagem -->
         <div class="preview-container" id="previewContainer" style="display: none;">
           <img id="previewImagem" alt="Preview da imagem" />
           <button type="button" class="btn-remover" id="btnRemoverImagem">
-            <span class="material-symbols-outlined">delete</span>Remover imagem
+            <span class="material-symbols-outlined">delete</span> Remover imagem
           </button>
         </div>
         <button type="submit" class="btn-submit">Publicar</button>
@@ -127,36 +220,22 @@
   </div>
 
   <script>
-    // ================================
-    // 1) APENAS UM EVENT LISTENER para o SWITCH
-    // ================================
     const toggleModoBtn = document.getElementById("toggleModoBtn");
-
-    // Ao carregar a página, verifica localStorage para manter o tema salvo
     if (localStorage.getItem("modoEscuro") === "true") {
       document.body.classList.add("dark-mode");
       toggleModoBtn.classList.add("active");
       toggleModoBtn.setAttribute("aria-pressed", "true");
     }
-    
     toggleModoBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
-
-      // adiciona/remove “active” para mover a bolinha do switch
       toggleModoBtn.classList.toggle("active", isDark);
       toggleModoBtn.setAttribute("aria-pressed", isDark);
-
-      // salva preferência
       localStorage.setItem("modoEscuro", isDark);
     });
 
-    // ================================
-    // 2) RESTANTE DAS FUNÇÕES DO SEU SCRIPT (USANDO LOCALSTORAGE)
-    // ================================
     const form = document.getElementById("formPessoa");
     const lista = document.getElementById("listaPessoas");
-
     const inputNome = document.getElementById("inputNome");
     const btnAnonimo = document.getElementById("btnAnonimo");
     const inputRelato = document.getElementById("inputRelato");
@@ -165,21 +244,17 @@
     const previewContainer = document.getElementById("previewContainer");
     const previewImagem = document.getElementById("previewImagem");
     const btnRemoverImagem = document.getElementById("btnRemoverImagem");
-
     const btnAbrirCamera = document.getElementById("btnAbrirCamera");
     const btnFecharCamera = document.getElementById("btnFecharCamera");
     const btnCapturarFoto = document.getElementById("btnCapturarFoto");
     const btnTrocarCamera = document.getElementById("btnTrocarCamera");
-
     const cameraPopup = document.getElementById("cameraPopup");
     const cameraVideo = document.getElementById("cameraVideo");
-
     let stream = null;
     let videoDevices = [];
     let currentCameraIndex = 0;
     let currentFacingMode = null;
 
-    // 2.1) Botão “Anônimo”: torna o campo somente leitura (readonly)
     btnAnonimo.addEventListener("click", () => {
       if (!inputNome.readOnly) {
         inputNome.value = "Anônimo";
@@ -194,8 +269,6 @@
         inputNome.focus();
       }
     });
-
-    // 2.2) Ao selecionar arquivo manualmente, exibe preview
     inputImagem.addEventListener("change", () => {
       previewContainer.style.display = "flex";
       previewContainer.classList.remove("invert-camera");
@@ -208,65 +281,39 @@
         reader.readAsDataURL(file);
       }
     });
-
-    // 2.3) Remover imagem
     btnRemoverImagem.addEventListener("click", () => {
       inputImagem.value = "";
       previewImagem.src = "";
       previewContainer.style.display = "none";
       previewContainer.classList.remove("invert-camera");
     });
-
-    // 2.4) Envio do formulário (salvando em localStorage)
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      // Verifica se há imagem (upload ou captura)
       if (!inputImagem.files.length && !previewImagem.src) {
         alert("Por favor, selecione ou capture uma imagem.");
         return;
       }
-
       const file = inputImagem.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = (ev) => {
-          const base64Img = ev.target.result; // string data URL
-          salvarRelatoNoLocalStorage(base64Img);
+          salvarRelatoNoLocalStorage(ev.target.result);
         };
         reader.readAsDataURL(file);
       } else {
-        // Se a imagem já estiver no preview (capturada pela câmera)
         salvarRelatoNoLocalStorage(previewImagem.src);
       }
     });
-
-    // 2.4.1) Função para salvar relato no localStorage
     function salvarRelatoNoLocalStorage(imagemBase64) {
       const nome = inputNome.value.trim() || "Anônimo";
       const relato = inputRelato.value.trim();
       const localizacao = inputLocalizacao.value.trim();
       const criadoEm = new Date().toISOString();
       const id = Date.now();
-
-      // Recupera array existente ou cria novo
       const armazenado = localStorage.getItem("pessoas_relato");
       const pessoas = armazenado ? JSON.parse(armazenado) : [];
-
-      const novoRelato = {
-        id: id,
-        nome: nome,
-        relato: relato,
-        localizacao: localizacao,
-        imagem: imagemBase64,
-        criado_em: criadoEm,
-        pontos: 0 // comece com zero curtidas
-      };
-
-      pessoas.push(novoRelato);
+      pessoas.push({ id, nome, relato, localizacao, imagem: imagemBase64, criado_em: criadoEm, pontos: 0 });
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
-
-      // Limpa formulário e preview
       form.reset();
       btnRemoverImagem.click();
       if (inputNome.readOnly) {
@@ -275,234 +322,126 @@
         inputNome.classList.remove("readonly-style");
         btnAnonimo.textContent = "Anônimo?";
       }
-
       carregarPessoas();
     }
-
-    // 2.5) Carregar lista de pessoas/relatos
     function carregarPessoas() {
       const armazenado = localStorage.getItem("pessoas_relato");
-      let pessoas = armazenado ? JSON.parse(armazenado) : [];
-
-      // Ordena pelo maior número de pontos (curtidas)
+      const pessoas = armazenado ? JSON.parse(armazenado) : [];
       pessoas.sort((a, b) => b.pontos - a.pontos);
-
       lista.innerHTML = "";
-
-      // Recupera lista de posts curtidos neste navegador
       const likedStored = localStorage.getItem("liked_posts");
       const likedPosts = likedStored ? JSON.parse(likedStored) : [];
-
       pessoas.forEach((p) => {
-        let dataFormatada = "";
-        try {
-          const dataObj = new Date(p.criado_em);
-          const dia = String(dataObj.getDate()).padStart(2, '0');
-          const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
-          const ano = dataObj.getFullYear();
-          const horas = String(dataObj.getHours()).padStart(2, '0');
-          const minutos = String(dataObj.getMinutes()).padStart(2, '0');
-          dataFormatada = `${dia}/${mes}/${ano} ${horas}:${minutos}`;
-        } catch {
-          dataFormatada = p.criado_em;
-        }
-
-        // Verifica se este post já foi curtido neste navegador
         const isLiked = likedPosts.includes(p.id);
-
         const li = document.createElement("li");
         li.classList.add("card-pessoa");
         li.innerHTML = `
           <div class="votacao">
-            <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}" data-id="${p.id}" aria-label="${isLiked ? 'Descurtir' : 'Curtir'}">
-              <span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span>
-            </button>
+            <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}" data-id="${p.id}" aria-label="${isLiked ? 'Descurtir' : 'Curtir'}"><span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span></button>
             <span class="score" id="score_${p.id}">${p.pontos}</span>
+            <div class="status-container">
+              <input type="checkbox" class="status-checkbox" id="status_${p.id}" data-id="${p.id}" />
+              <span class="status-text" id="status_text_${p.id}">em análise</span>
+            </div>
           </div>
           <strong>Usuário: ${p.nome}</strong>
           <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
           <p id="relato">${p.relato}</p>
-          <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>  
-          <div class="votacao-bottom" style="justify-content: space-between;">
-            <p style="font-size: 14px;">${dataFormatada}</p>
-            <button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button>
-          </div>
+          <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>
+          <div class="votacao-bottom" style="justify-content: space-between;"><p style="font-size: 14px;">${new Date(p.criado_em).toLocaleString('pt-BR')}</p><button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button></div>
         `;
         lista.appendChild(li);
       });
+      document.querySelectorAll(".like-btn").forEach((btn) =>
+        btn.addEventListener("click", (e) => toggleLike(Number(e.currentTarget.dataset.id)))
+      );
 
-      // Evento de clique no botão de like
-      document.querySelectorAll(".like-btn").forEach((btn) => {
+      document.querySelectorAll(".delete-btn").forEach((btn) =>
         btn.addEventListener("click", (e) => {
-          const id = Number(e.currentTarget.getAttribute("data-id"));
-          toggleLike(id);
-        });
-      });
-
-      // Evento de exclusão de relato
-      document.querySelectorAll(".delete-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          const id = Number(e.currentTarget.getAttribute("data-id"));
           if (confirm("Tem certeza que deseja excluir este cadastro?")) {
-            excluirRelato(id);
+            excluirRelato(Number(e.currentTarget.dataset.id));
           }
-        });
-      });
+        })
+      );
+
+      document.querySelectorAll(".status-checkbox").forEach((cb) =>
+        cb.addEventListener("change", (e) => {
+          const id = e.currentTarget.dataset.id;
+          const textEl = document.getElementById(`status_text_${id}`);
+
+          if (e.currentTarget.checked) {
+            textEl.textContent = 'resolvido!';
+            textEl.classList.add('resolved', 'status-checkbox-resolved'); // Adiciona a nova classe ao span
+          } else {
+            textEl.textContent = 'em análise';
+            textEl.classList.remove('resolved', 'status-checkbox-resolved'); // Remove a nova classe do span
+          }
+        })
+      );
+
+
     }
-
-    // 2.5.1) Função para alternar curtida (Curtir/Descurtir)
     function toggleLike(id) {
-      // Recupera relatos e posts curtidos
-      const armazenado = localStorage.getItem("pessoas_relato");
-      let pessoas = armazenado ? JSON.parse(armazenado) : [];
-
-      const likedStored = localStorage.getItem("liked_posts");
-      let likedPosts = likedStored ? JSON.parse(likedStored) : [];
-
-      const indexLiked = likedPosts.indexOf(id);
-      const postIndex = pessoas.findIndex((p) => p.id === id);
-      if (postIndex === -1) return; // não encontrou post
-
-      // Se já está curtido, remove a curtida
-      if (indexLiked !== -1) {
-        // Remove da lista de curtidos
-        likedPosts.splice(indexLiked, 1);
-        // Decrementa pontuação (não cai abaixo de 0)
-        pessoas[postIndex].pontos = Math.max(0, pessoas[postIndex].pontos - 1);
-      } else {
-        // Se não está curtido, adiciona curtida
-        likedPosts.push(id);
-        pessoas[postIndex].pontos = pessoas[postIndex].pontos + 1;
-      }
-
-      // Salva de volta no storage
+      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
+      let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
+      const idxLike = likedPosts.indexOf(id);
+      const postIdx = pessoas.findIndex(p => p.id === id);
+      if (postIdx < 0) return;
+      if (idxLike !== -1) { likedPosts.splice(idxLike, 1); pessoas[postIdx].pontos = Math.max(0, pessoas[postIdx].pontos - 1); }
+      else { likedPosts.push(id); pessoas[postIdx].pontos++; }
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
       localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
-
-      // Re-renderiza a lista
       carregarPessoas();
     }
-
-    // 2.5.2) Função para excluir relato
     function excluirRelato(id) {
-      // Remove relato dos posts
-      const armazenado = localStorage.getItem("pessoas_relato");
-      let pessoas = armazenado ? JSON.parse(armazenado) : [];
-
-      pessoas = pessoas.filter((p) => p.id !== id);
+      let pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
+      pessoas = pessoas.filter(p => p.id !== id);
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
-
-      // Se o post estava em liked_posts, remove também de lá
-      const likedStored = localStorage.getItem("liked_posts");
-      let likedPosts = likedStored ? JSON.parse(likedStored) : [];
+      let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
       const idx = likedPosts.indexOf(id);
-      if (idx !== -1) {
-        likedPosts.splice(idx, 1);
-        localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
-      }
-
+      if (idx !== -1) { likedPosts.splice(idx, 1); localStorage.setItem("liked_posts", JSON.stringify(likedPosts)); }
       carregarPessoas();
     }
-
-    // 2.6) Obter e iniciar câmeras
     async function getVideoDevices() {
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        videoDevices = devices.filter((d) => d.kind === "videoinput");
-      } catch (err) {
-        console.error("Erro ao enumerar dispositivos de vídeo:", err);
-      }
+        videoDevices = devices.filter(d => d.kind === "videoinput");
+      } catch (err) { console.error(err); }
     }
-
     async function startCamera(index) {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
+      if (stream) stream.getTracks().forEach(t => t.stop());
       try {
-        const constraints = {
-          video: { deviceId: { exact: videoDevices[index].deviceId } },
-          audio: false,
-        };
+        const constraints = { video: { deviceId: { exact: videoDevices[index].deviceId } }, audio: false };
         stream = await navigator.mediaDevices.getUserMedia(constraints);
         cameraVideo.srcObject = stream;
-
         const [track] = stream.getVideoTracks();
-        const settings = track.getSettings();
-        currentFacingMode = settings.facingMode || null;
-        if (currentFacingMode === "user") {
-          cameraVideo.style.transform = "scaleX(-1)";
-        } else {
-          cameraVideo.style.transform = "none";
-        }
-      } catch (err) {
-        console.error("Erro ao iniciar câmera:", err);
-        alert("Não foi possível acessar a câmera.");
-      }
+        currentFacingMode = track.getSettings().facingMode || null;
+        cameraVideo.style.transform = currentFacingMode === "user" ? "scaleX(-1)" : "none";
+      } catch (err) { console.error(err); alert("Não foi possível acessar a câmera."); }
     }
-
     btnAbrirCamera.addEventListener("click", async () => {
       await getVideoDevices();
-      if (videoDevices.length === 0) {
-        alert("Nenhuma câmera foi encontrada.");
-        return;
-      }
-      currentCameraIndex = 0;
-      await startCamera(currentCameraIndex);
+      if (!videoDevices.length) return alert("Nenhuma câmera foi encontrada.");
+      currentCameraIndex = 0; await startCamera(currentCameraIndex);
       btnTrocarCamera.style.display = videoDevices.length > 1 ? "inline-block" : "none";
-      cameraPopup.style.display = "flex";
-      cameraPopup.setAttribute("aria-hidden", "false");
+      cameraPopup.style.display = "flex"; cameraPopup.setAttribute("aria-hidden", "false");
     });
-
-    btnFecharCamera.addEventListener("click", () => {
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-        stream = null;
-      }
-      cameraPopup.style.display = "none";
-      cameraPopup.setAttribute("aria-hidden", "true");
-    });
-
-    btnTrocarCamera.addEventListener("click", async () => {
-      if (videoDevices.length <= 1) return;
-      currentCameraIndex = (currentCameraIndex + 1) % videoDevices.length;
-      await startCamera(currentCameraIndex);
-    });
-
+    btnFecharCamera.addEventListener("click", () => { if (stream) stream.getTracks().forEach(t => t.stop()); cameraPopup.style.display = "none"; cameraPopup.setAttribute("aria-hidden", "true"); });
+    btnTrocarCamera.addEventListener("click", async () => { if (videoDevices.length <= 1) return; currentCameraIndex = (currentCameraIndex + 1) % videoDevices.length; await startCamera(currentCameraIndex); });
     btnCapturarFoto.addEventListener("click", () => {
       if (!stream) return;
-      const canvas = document.createElement("canvas");
-      canvas.width = cameraVideo.videoWidth;
-      canvas.height = cameraVideo.videoHeight;
+      const canvas = document.createElement("canvas"); canvas.width = cameraVideo.videoWidth; canvas.height = cameraVideo.videoHeight;
       const ctx = canvas.getContext("2d");
-
-      if (currentFacingMode === "user") {
-        ctx.translate(canvas.width, 0);
-        ctx.scale(-1, 1);
-      }
+      if (currentFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
       ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
-
-      canvas.toBlob((blob) => {
+      canvas.toBlob(blob => {
         const file = new File([blob], "foto.png", { type: "image/png" });
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        inputImagem.files = dt.files;
-
-        previewImagem.src = URL.createObjectURL(blob);
-        previewContainer.classList.remove("invert-camera");
-        previewContainer.style.display = "flex";
-
-        btnFecharCamera.click();
+        const dt = new DataTransfer(); dt.items.add(file); inputImagem.files = dt.files;
+        previewImagem.src = URL.createObjectURL(blob); previewContainer.classList.remove("invert-camera"); previewContainer.style.display = "flex"; btnFecharCamera.click();
       }, "image/png");
     });
-
-    // 2.7) Inicializa lista ao carregar a página
-    window.addEventListener("DOMContentLoaded", () => {
-      carregarPessoas();
-      // Se já houver arquivo no input (recarregar), mostra preview
-      if (inputImagem.files.length) {
-        previewContainer.style.display = "flex";
-      }
-    });
+    window.addEventListener("DOMContentLoaded", () => carregarPessoas());
   </script>
 </body>
+
 </html>
