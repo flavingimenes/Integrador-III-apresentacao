@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro com Imagem</title>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="main.css" />
   <style>
     .preview-container img {
@@ -27,34 +30,60 @@
       box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
     }
 
-    .votacao .score { min-width: 24px; text-align: center; font-weight: bold; }
-    .like-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; }
+    .votacao .score {
+      min-width: 24px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .like-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+    }
+
     .like-btn .material-symbols-outlined {
       font-size: 24px;
-      color: #888;
+      color: black;
       transition: color 0.3s ease;
-      transform: scale(1); /* Tamanho normal por padrão */
+      transform: scale(1);
+      /* Tamanho normal por padrão */
     }
+
     .like-btn.liked .material-symbols-outlined {
       color: #e0245e;
-      transform: scale(1.5); /* Tamanho aumentado quando curtido */
+      transform: scale(1.5);
+      /* Tamanho aumentado quando curtido */
     }
 
     /* Animações para transição */
     @keyframes grow {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.5); }
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.5);
+      }
     }
-    
+
     @keyframes shrink {
-      0% { transform: scale(1.5); }
-      100% { transform: scale(1); }
+      0% {
+        transform: scale(1.5);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
-    
+
     .grow-animation {
       animation: grow 0.3s ease forwards;
     }
-    
+
     .shrink-animation {
       animation: shrink 0.3s ease forwards;
     }
@@ -65,6 +94,7 @@
       align-items: center;
       gap: 8px;
       margin-left: auto;
+      margin-right: 10px;
       font-family: "Segoe UI", sans-serif;
     }
 
@@ -101,7 +131,7 @@
       font-size: 14px;
       font-weight: 500;
       padding: 4px 10px;
-      border-radius: 14px;
+      border-radius: 5px;
       background-color: #ffebee;
       color: #c62828;
       transition: all 0.3s ease-in-out;
@@ -112,7 +142,7 @@
       color: #2e7d32;
       font-weight: bold;
       padding: 4px 10px;
-      border-radius: 14px;
+      border-radius: 15px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease-in-out;
     }
@@ -158,6 +188,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app</span></a>
@@ -184,7 +215,8 @@
           <i class="fas fa-upload"></i> Escolher imagem
         </label>
         <button type="button" class="camera-btn" id="btnAbrirCamera">
-          Tirar foto com a câmera <img width="24" height="24" src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
+          Tirar foto com a câmera <img width="24" height="24"
+            src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
         </button>
         <div class="preview-container" id="previewContainer" style="display: none;">
           <img id="previewImagem" alt="Preview da imagem" />
@@ -337,32 +369,43 @@
         const li = document.createElement("li");
         li.classList.add("card-pessoa");
         li.innerHTML = `
-          <div class="votacao">
-            <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}" data-id="${p.id}" aria-label="${isLiked ? 'Descurtir' : 'Curtir'}">
-              <span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span>
-            </button>
-            <span class="score" id="score_${p.id}">${p.pontos}</span>
-            <div class="status-container">
-              <input type="checkbox" class="status-checkbox" id="status_${p.id}" data-id="${p.id}" />
-              <span class="status-text" id="status_text_${p.id}">em análise</span>
-            </div>
-          </div>
-          <strong>Usuário: ${p.nome}</strong>
-          <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
-          <p id="relato">${p.relato}</p>
-          <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>
-          <div class="votacao-bottom" style="justify-content: space-between;"><p style="font-size: 14px;">${new Date(p.criado_em).toLocaleString('pt-BR')}</p><button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button></div>
+              <div class="votacao">
+      <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}"
+              data-id="${p.id}"
+              aria-label="${isLiked ? 'Descurtir' : 'Curtir'}">
+        <!-- Mantém material-symbols-outlined para não quebrar a sua animação/CSS original -->
+        <!-- Adiciona fa-solid ou fa-regular para o coração do Font Awesome -->
+        <span class="material-symbols-outlined ${isLiked ? 'fa-solid fa-heart' : 'fa-regular fa-heart'}"></span>
+      </button>
+      <span class="score" id="score_${p.id}">${p.pontos}</span>
+      <div class="status-container">
+        <input type="checkbox" class="status-checkbox" id="status_${p.id}" data-id="${p.id}" />
+        <span class="status-text" id="status_text_${p.id}">em análise</span>
+      </div>
+    </div>
+    <strong>Usuário: ${p.nome}</strong>
+    <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
+    <p id="relato">${p.relato}</p>
+    <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>
+    <div class="votacao-bottom" style="justify-content: space-between;">
+      <p style="font-size: 14px;">
+        ${new Date(p.criado_em).toLocaleString('pt-BR')}
+      </p>
+      <button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">
+        Excluir
+      </button>
+    </div>
         `;
         lista.appendChild(li);
       });
-      
+
       // Eventos com a nova lógica de animação
       document.querySelectorAll(".like-btn").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           const icon = e.currentTarget.querySelector('span');
           const id = Number(e.currentTarget.dataset.id);
           const wasLiked = e.currentTarget.classList.contains('liked');
-          
+
           // Aplicar animação antes de mudar o estado
           if (wasLiked) {
             // Animação de redução ao descurtir
@@ -373,7 +416,7 @@
             icon.classList.remove('shrink-animation');
             icon.classList.add('grow-animation');
           }
-          
+
           // Atualizar o estado após a animação
           setTimeout(() => {
             toggleLike(id);
@@ -381,7 +424,7 @@
         });
       });
 
-      document.querySelectorAll(".delete-btn").forEach((btn) => 
+      document.querySelectorAll(".delete-btn").forEach((btn) =>
         btn.addEventListener("click", (e) => {
           if (confirm("Tem certeza que deseja excluir este cadastro?")) {
             excluirRelato(Number(e.currentTarget.dataset.id));
@@ -393,7 +436,7 @@
         cb.addEventListener("change", (e) => {
           const id = e.currentTarget.dataset.id;
           const textEl = document.getElementById(`status_text_${id}`);
-          
+
           if (e.currentTarget.checked) {
             textEl.textContent = 'resolvido!';
             textEl.classList.add('resolved', 'status-checkbox-resolved');
@@ -410,7 +453,7 @@
       const idxLike = likedPosts.indexOf(id);
       const postIdx = pessoas.findIndex(p => p.id === id);
       if (postIdx < 0) return;
-      if (idxLike !== -1) { likedPosts.splice(idxLike,1); pessoas[postIdx].pontos = Math.max(0,pessoas[postIdx].pontos-1); }
+      if (idxLike !== -1) { likedPosts.splice(idxLike, 1); pessoas[postIdx].pontos = Math.max(0, pessoas[postIdx].pontos - 1); }
       else { likedPosts.push(id); pessoas[postIdx].pontos++; }
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
       localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
@@ -422,49 +465,50 @@
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
       let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
       const idx = likedPosts.indexOf(id);
-      if (idx!==-1) { likedPosts.splice(idx,1); localStorage.setItem("liked_posts", JSON.stringify(likedPosts)); }
+      if (idx !== -1) { likedPosts.splice(idx, 1); localStorage.setItem("liked_posts", JSON.stringify(likedPosts)); }
       carregarPessoas();
     }
     async function getVideoDevices() {
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
         videoDevices = devices.filter(d => d.kind === "videoinput");
-      } catch(err) { console.error(err); }
+      } catch (err) { console.error(err); }
     }
     async function startCamera(index) {
       if (stream) stream.getTracks().forEach(t => t.stop());
       try {
-        const constraints = { video:{ deviceId:{exact:videoDevices[index].deviceId} }, audio:false };
+        const constraints = { video: { deviceId: { exact: videoDevices[index].deviceId } }, audio: false };
         stream = await navigator.mediaDevices.getUserMedia(constraints);
         cameraVideo.srcObject = stream;
         const [track] = stream.getVideoTracks();
         currentFacingMode = track.getSettings().facingMode || null;
         cameraVideo.style.transform = currentFacingMode === "user" ? "scaleX(-1)" : "none";
-      } catch(err) { console.error(err); alert("Não foi possível acessar a câmera."); }
+      } catch (err) { console.error(err); alert("Não foi possível acessar a câmera."); }
     }
     btnAbrirCamera.addEventListener("click", async () => {
       await getVideoDevices();
       if (!videoDevices.length) return alert("Nenhuma câmera foi encontrada.");
       currentCameraIndex = 0; await startCamera(currentCameraIndex);
-      btnTrocarCamera.style.display = videoDevices.length>1?"inline-block":"none";
-      cameraPopup.style.display="flex"; cameraPopup.setAttribute("aria-hidden","false");
+      btnTrocarCamera.style.display = videoDevices.length > 1 ? "inline-block" : "none";
+      cameraPopup.style.display = "flex"; cameraPopup.setAttribute("aria-hidden", "false");
     });
-    btnFecharCamera.addEventListener("click", () => { if (stream) stream.getTracks().forEach(t => t.stop()); cameraPopup.style.display="none"; cameraPopup.setAttribute("aria-hidden","true"); });
-    btnTrocarCamera.addEventListener("click", async ()=>{ if (videoDevices.length<=1) return; currentCameraIndex=(currentCameraIndex+1)%videoDevices.length; await startCamera(currentCameraIndex); });
-    btnCapturarFoto.addEventListener("click", ()=>{
+    btnFecharCamera.addEventListener("click", () => { if (stream) stream.getTracks().forEach(t => t.stop()); cameraPopup.style.display = "none"; cameraPopup.setAttribute("aria-hidden", "true"); });
+    btnTrocarCamera.addEventListener("click", async () => { if (videoDevices.length <= 1) return; currentCameraIndex = (currentCameraIndex + 1) % videoDevices.length; await startCamera(currentCameraIndex); });
+    btnCapturarFoto.addEventListener("click", () => {
       if (!stream) return;
-      const canvas=document.createElement("canvas"); canvas.width=cameraVideo.videoWidth; canvas.height=cameraVideo.videoHeight;
-      const ctx=canvas.getContext("2d");
-      if (currentFacingMode==="user") { ctx.translate(canvas.width,0); ctx.scale(-1,1); }
-      ctx.drawImage(cameraVideo,0,0,canvas.width,canvas.height);
-      canvas.toBlob(blob=>{
-        const file=new File([blob],"foto.png",{type:"image/png"});
-        const dt=new DataTransfer(); dt.items.add(file); inputImagem.files=dt.files;
-        previewImagem.src=URL.createObjectURL(blob); previewContainer.classList.remove("invert-camera"); previewContainer.style.display="flex"; btnFecharCamera.click();
-      },"image/png");
+      const canvas = document.createElement("canvas"); canvas.width = cameraVideo.videoWidth; canvas.height = cameraVideo.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (currentFacingMode === "user") { ctx.translate(canvas.width, 0); ctx.scale(-1, 1); }
+      ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(blob => {
+        const file = new File([blob], "foto.png", { type: "image/png" });
+        const dt = new DataTransfer(); dt.items.add(file); inputImagem.files = dt.files;
+        previewImagem.src = URL.createObjectURL(blob); previewContainer.classList.remove("invert-camera"); previewContainer.style.display = "flex"; btnFecharCamera.click();
+      }, "image/png");
     });
-    
+
     window.addEventListener("DOMContentLoaded", () => carregarPessoas());
   </script>
 </body>
+
 </html>
