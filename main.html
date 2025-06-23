@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,37 +24,39 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
-        rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
-        rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
     }
 
-    .votacao .score {
-      min-width: 24px;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    /* Botão de like com animação */
-    .like-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      display: flex;
-      align-items: center;
-    }
-
+    .votacao .score { min-width: 24px; text-align: center; font-weight: bold; }
+    .like-btn { background: none; border: none; cursor: pointer; padding: 4px; display: flex; align-items: center; }
     .like-btn .material-symbols-outlined {
       font-size: 24px;
       color: #888;
-      transition: color .2s ease-in-out, transform .2s ease-in-out;
-      transform-origin: center center;
+      transition: color 0.3s ease;
+      transform: scale(1); /* Tamanho normal por padrão */
     }
-
     .like-btn.liked .material-symbols-outlined {
       color: #e0245e;
-      transform: scale(1.3);
+      transform: scale(1.5); /* Tamanho aumentado quando curtido */
+    }
+
+    /* Animações para transição */
+    @keyframes grow {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.5); }
+    }
+    
+    @keyframes shrink {
+      0% { transform: scale(1.5); }
+      100% { transform: scale(1); }
+    }
+    
+    .grow-animation {
+      animation: grow 0.3s ease forwards;
+    }
+    
+    .shrink-animation {
+      animation: shrink 0.3s ease forwards;
     }
 
     /* Botão de status substituindo checkbox */
@@ -65,7 +66,6 @@
       gap: 8px;
       margin-left: auto;
       font-family: "Segoe UI", sans-serif;
-      margin-right: 10px;
     }
 
     .status-btn {
@@ -101,7 +101,7 @@
       font-size: 14px;
       font-weight: 500;
       padding: 4px 10px;
-      border-radius: 5px;
+      border-radius: 14px;
       background-color: #ffebee;
       color: #c62828;
       transition: all 0.3s ease-in-out;
@@ -112,7 +112,7 @@
       color: #2e7d32;
       font-weight: bold;
       padding: 4px 10px;
-      border-radius: 5px;
+      border-radius: 14px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease-in-out;
     }
@@ -123,7 +123,7 @@
       height: 20px;
       border: 2px solid #ff9800;
       border-radius: 4px;
-      background-color: #d1cece;
+      background-color: #fff;
       cursor: pointer;
       position: relative;
       transition: all 0.2s ease-in-out;
@@ -158,12 +158,9 @@
     }
   </style>
 </head>
-
 <body>
   <header>
-    <a href="index.html">
-      <span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app</span>
-    </a>
+    <a href="index.html"><span class="material-symbols-outlined" style="font-size: 35px;">exit_to_app</span></a>
     <div class="botao-troca">
       <span class="material-symbols-outlined">routine</span>
       <button class="toggle-mode" id="toggleModoBtn" aria-pressed="false">
@@ -187,8 +184,7 @@
           <i class="fas fa-upload"></i> Escolher imagem
         </label>
         <button type="button" class="camera-btn" id="btnAbrirCamera">
-          Tirar foto com a câmera
-          <img width="24" height="24" src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
+          Tirar foto com a câmera <img width="24" height="24" src="https://img.icons8.com/sf-regular-filled/48/add-camera.png" alt="camera" />
         </button>
         <div class="preview-container" id="previewContainer" style="display: none;">
           <img id="previewImagem" alt="Preview da imagem" />
@@ -199,15 +195,22 @@
         <button type="submit" class="btn-submit">Publicar</button>
       </form>
     </div>
+    <!-- Pop-up da câmera -->
     <div id="cameraPopup" class="camera-popup" style="display: none;" aria-hidden="true">
       <div class="camera-content">
         <div>
-          <button type="button" class="close-popup" id="btnFecharCamera">✖</button>
+          <button type="button" class="close-popup" id="btnFecharCamera">
+            ✖
+          </button>
         </div>
         <video id="cameraVideo" autoplay playsinline></video>
         <div style="display: flex; gap: 10px; margin-top: 10px; justify-content: center;">
-          <button type="button" class="camera-btn" id="btnTrocarCamera">Trocar Câmera</button>
-          <button type="button" class="camera-btn" id="btnCapturarFoto">Capturar</button>
+          <button type="button" class="camera-btn" id="btnTrocarCamera">
+            Trocar Câmera
+          </button>
+          <button type="button" class="camera-btn" id="btnCapturarFoto">
+            Capturar
+          </button>
         </div>
       </div>
     </div>
@@ -242,79 +245,103 @@
     const previewContainer = document.getElementById("previewContainer");
     const previewImagem = document.getElementById("previewImagem");
     const btnRemoverImagem = document.getElementById("btnRemoverImagem");
+    const btnAbrirCamera = document.getElementById("btnAbrirCamera");
+    const btnFecharCamera = document.getElementById("btnFecharCamera");
+    const btnCapturarFoto = document.getElementById("btnCapturarFoto");
+    const btnTrocarCamera = document.getElementById("btnTrocarCamera");
+    const cameraPopup = document.getElementById("cameraPopup");
+    const cameraVideo = document.getElementById("cameraVideo");
+    let stream = null;
+    let videoDevices = [];
+    let currentCameraIndex = 0;
+    let currentFacingMode = null;
 
     btnAnonimo.addEventListener("click", () => {
       if (!inputNome.readOnly) {
         inputNome.value = "Anônimo";
         inputNome.readOnly = true;
         btnAnonimo.textContent = "Desfazer";
+        inputNome.classList.add("readonly-style");
       } else {
         inputNome.value = "";
         inputNome.readOnly = false;
         btnAnonimo.textContent = "Anônimo?";
+        inputNome.classList.remove("readonly-style");
+        inputNome.focus();
       }
     });
-
     inputImagem.addEventListener("change", () => {
+      previewContainer.style.display = "flex";
+      previewContainer.classList.remove("invert-camera");
       const file = inputImagem.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = e => {
+        reader.onload = (e) => {
           previewImagem.src = e.target.result;
-          previewContainer.style.display = "flex";
         };
         reader.readAsDataURL(file);
       }
     });
-
     btnRemoverImagem.addEventListener("click", () => {
       inputImagem.value = "";
+      previewImagem.src = "";
       previewContainer.style.display = "none";
+      previewContainer.classList.remove("invert-camera");
     });
-
-    form.addEventListener("submit", e => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
+      if (!inputImagem.files.length && !previewImagem.src) {
+        alert("Por favor, selecione ou capture uma imagem.");
+        return;
+      }
       const file = inputImagem.files[0];
-      if (!file) return alert("Selecione ou capture uma imagem.");
-      const reader = new FileReader();
-      reader.onload = ev => salvarRelato(ev.target.result);
-      reader.readAsDataURL(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          salvarRelatoNoLocalStorage(ev.target.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        salvarRelatoNoLocalStorage(previewImagem.src);
+      }
     });
-
-    function salvarRelato(imgData) {
-      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
+    function salvarRelatoNoLocalStorage(imagemBase64) {
+      const nome = inputNome.value.trim() || "Anônimo";
+      const relato = inputRelato.value.trim();
+      const localizacao = inputLocalizacao.value.trim();
+      const criadoEm = new Date().toISOString();
       const id = Date.now();
-      pessoas.push({
-        id,
-        nome: inputNome.value || "Anônimo",
-        relato: inputRelato.value,
-        localizacao: inputLocalizacao.value,
-        imagem: imgData,
-        pontos: 0,
-        criado_em: new Date().toISOString()
-      });
+      const armazenado = localStorage.getItem("pessoas_relato");
+      const pessoas = armazenado ? JSON.parse(armazenado) : [];
+      pessoas.push({ id, nome, relato, localizacao, imagem: imagemBase64, criado_em: criadoEm, pontos: 0 });
       localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
       form.reset();
-      previewContainer.style.display = "none";
+      btnRemoverImagem.click();
+      if (inputNome.readOnly) {
+        inputNome.readOnly = false;
+        inputNome.value = "";
+        inputNome.classList.remove("readonly-style");
+        btnAnonimo.textContent = "Anônimo?";
+      }
       carregarPessoas();
     }
-
     function carregarPessoas() {
-      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]')
-        .sort((a, b) => b.pontos - a.pontos);
-      const liked = JSON.parse(localStorage.getItem("liked_posts") || '[]');
+      const armazenado = localStorage.getItem("pessoas_relato");
+      const pessoas = armazenado ? JSON.parse(armazenado) : [];
+      pessoas.sort((a, b) => b.pontos - a.pontos);
       lista.innerHTML = "";
-
-      pessoas.forEach(p => {
-        const isLiked = liked.includes(p.id);
+      const likedStored = localStorage.getItem("liked_posts");
+      const likedPosts = likedStored ? JSON.parse(likedStored) : [];
+      pessoas.forEach((p) => {
+        const isLiked = likedPosts.includes(p.id);
         const li = document.createElement("li");
-        li.className = "card-pessoa";
+        li.classList.add("card-pessoa");
         li.innerHTML = `
           <div class="votacao">
-            <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${p.id}">
+            <button class="like-btn btn-voto ${isLiked ? 'liked' : ''}" data-id="${p.id}" aria-label="${isLiked ? 'Descurtir' : 'Curtir'}">
               <span class="material-symbols-outlined">${isLiked ? 'favorite' : 'favorite_border'}</span>
             </button>
-            <span class="score">${p.pontos}</span>
+            <span class="score" id="score_${p.id}">${p.pontos}</span>
             <div class="status-container">
               <input type="checkbox" class="status-checkbox" id="status_${p.id}" data-id="${p.id}" />
               <span class="status-text" id="status_text_${p.id}">em análise</span>
@@ -322,54 +349,122 @@
           </div>
           <strong>Usuário: ${p.nome}</strong>
           <img src="${p.imagem}" alt="Imagem de ${p.nome}" />
-          <p>${p.relato}</p>
-          <p><em>${new Date(p.criado_em).toLocaleString('pt-BR')}</em></p>
+          <p id="relato">${p.relato}</p>
+          <p class="loc-text"><em>Localização:</em> &ensp;${p.localizacao}</p>
+          <div class="votacao-bottom" style="justify-content: space-between;"><p style="font-size: 14px;">${new Date(p.criado_em).toLocaleString('pt-BR')}</p><button class="delete-btn" data-id="${p.id}" aria-label="Excluir relato">Excluir</button></div>
         `;
         lista.appendChild(li);
       });
-
-      document.querySelectorAll(".like-btn").forEach(btn => {
-        btn.onclick = () => {
-          const id = Number(btn.dataset.id);
-          const span = btn.querySelector("span");
-          // Aplica o transform na hora do clique:
-          btn.classList.toggle("liked");
-          // Atualiza dados e pontuação:
-          let posts = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
-          let likes = JSON.parse(localStorage.getItem("liked_posts") || '[]');
-          const idx = likes.indexOf(id);
-          const pi = posts.findIndex(x => x.id === id);
-          if (idx > -1) {
-            likes.splice(idx, 1);
-            posts[pi].pontos = Math.max(0, posts[pi].pontos - 1);
+      
+      // Eventos com a nova lógica de animação
+      document.querySelectorAll(".like-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const icon = e.currentTarget.querySelector('span');
+          const id = Number(e.currentTarget.dataset.id);
+          const wasLiked = e.currentTarget.classList.contains('liked');
+          
+          // Aplicar animação antes de mudar o estado
+          if (wasLiked) {
+            // Animação de redução ao descurtir
+            icon.classList.remove('grow-animation');
+            icon.classList.add('shrink-animation');
           } else {
-            likes.push(id);
-            posts[pi].pontos++;
+            // Animação de crescimento ao curtir
+            icon.classList.remove('shrink-animation');
+            icon.classList.add('grow-animation');
           }
-          localStorage.setItem("pessoas_relato", JSON.stringify(posts));
-          localStorage.setItem("liked_posts", JSON.stringify(likes));
-          // Atualiza número na interface:
-          btn.nextElementSibling.textContent = posts[pi].pontos;
-        };
+          
+          // Atualizar o estado após a animação
+          setTimeout(() => {
+            toggleLike(id);
+          }, 300);
+        });
       });
 
-      document.querySelectorAll(".status-checkbox").forEach(cb => {
-        cb.onchange = e => {
-          const id = cb.dataset.id;
-          const txt = document.getElementById(`status_text_${id}`);
-          if (cb.checked) {
-            txt.textContent = 'resolvido!';
-            txt.classList.add('status-checkbox-resolved');
-          } else {
-            txt.textContent = 'em análise';
-            txt.classList.remove('status-checkbox-resolved');
+      document.querySelectorAll(".delete-btn").forEach((btn) => 
+        btn.addEventListener("click", (e) => {
+          if (confirm("Tem certeza que deseja excluir este cadastro?")) {
+            excluirRelato(Number(e.currentTarget.dataset.id));
           }
-        };
-      });
+        })
+      );
+
+      document.querySelectorAll(".status-checkbox").forEach((cb) =>
+        cb.addEventListener("change", (e) => {
+          const id = e.currentTarget.dataset.id;
+          const textEl = document.getElementById(`status_text_${id}`);
+          
+          if (e.currentTarget.checked) {
+            textEl.textContent = 'resolvido!';
+            textEl.classList.add('resolved', 'status-checkbox-resolved');
+          } else {
+            textEl.textContent = 'em análise';
+            textEl.classList.remove('resolved', 'status-checkbox-resolved');
+          }
+        })
+      );
     }
-
-    window.addEventListener("DOMContentLoaded", carregarPessoas);
+    function toggleLike(id) {
+      const pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
+      let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
+      const idxLike = likedPosts.indexOf(id);
+      const postIdx = pessoas.findIndex(p => p.id === id);
+      if (postIdx < 0) return;
+      if (idxLike !== -1) { likedPosts.splice(idxLike,1); pessoas[postIdx].pontos = Math.max(0,pessoas[postIdx].pontos-1); }
+      else { likedPosts.push(id); pessoas[postIdx].pontos++; }
+      localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
+      localStorage.setItem("liked_posts", JSON.stringify(likedPosts));
+      carregarPessoas();
+    }
+    function excluirRelato(id) {
+      let pessoas = JSON.parse(localStorage.getItem("pessoas_relato") || '[]');
+      pessoas = pessoas.filter(p => p.id !== id);
+      localStorage.setItem("pessoas_relato", JSON.stringify(pessoas));
+      let likedPosts = JSON.parse(localStorage.getItem("liked_posts") || '[]');
+      const idx = likedPosts.indexOf(id);
+      if (idx!==-1) { likedPosts.splice(idx,1); localStorage.setItem("liked_posts", JSON.stringify(likedPosts)); }
+      carregarPessoas();
+    }
+    async function getVideoDevices() {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        videoDevices = devices.filter(d => d.kind === "videoinput");
+      } catch(err) { console.error(err); }
+    }
+    async function startCamera(index) {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      try {
+        const constraints = { video:{ deviceId:{exact:videoDevices[index].deviceId} }, audio:false };
+        stream = await navigator.mediaDevices.getUserMedia(constraints);
+        cameraVideo.srcObject = stream;
+        const [track] = stream.getVideoTracks();
+        currentFacingMode = track.getSettings().facingMode || null;
+        cameraVideo.style.transform = currentFacingMode === "user" ? "scaleX(-1)" : "none";
+      } catch(err) { console.error(err); alert("Não foi possível acessar a câmera."); }
+    }
+    btnAbrirCamera.addEventListener("click", async () => {
+      await getVideoDevices();
+      if (!videoDevices.length) return alert("Nenhuma câmera foi encontrada.");
+      currentCameraIndex = 0; await startCamera(currentCameraIndex);
+      btnTrocarCamera.style.display = videoDevices.length>1?"inline-block":"none";
+      cameraPopup.style.display="flex"; cameraPopup.setAttribute("aria-hidden","false");
+    });
+    btnFecharCamera.addEventListener("click", () => { if (stream) stream.getTracks().forEach(t => t.stop()); cameraPopup.style.display="none"; cameraPopup.setAttribute("aria-hidden","true"); });
+    btnTrocarCamera.addEventListener("click", async ()=>{ if (videoDevices.length<=1) return; currentCameraIndex=(currentCameraIndex+1)%videoDevices.length; await startCamera(currentCameraIndex); });
+    btnCapturarFoto.addEventListener("click", ()=>{
+      if (!stream) return;
+      const canvas=document.createElement("canvas"); canvas.width=cameraVideo.videoWidth; canvas.height=cameraVideo.videoHeight;
+      const ctx=canvas.getContext("2d");
+      if (currentFacingMode==="user") { ctx.translate(canvas.width,0); ctx.scale(-1,1); }
+      ctx.drawImage(cameraVideo,0,0,canvas.width,canvas.height);
+      canvas.toBlob(blob=>{
+        const file=new File([blob],"foto.png",{type:"image/png"});
+        const dt=new DataTransfer(); dt.items.add(file); inputImagem.files=dt.files;
+        previewImagem.src=URL.createObjectURL(blob); previewContainer.classList.remove("invert-camera"); previewContainer.style.display="flex"; btnFecharCamera.click();
+      },"image/png");
+    });
+    
+    window.addEventListener("DOMContentLoaded", () => carregarPessoas());
   </script>
 </body>
-
 </html>
