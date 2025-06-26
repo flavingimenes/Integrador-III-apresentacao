@@ -190,9 +190,10 @@ body.dark-mode textarea:focus {
     margin-left: 15px;
   }
 
-  .logo-header{
-    width: 30px;
-  }
+  .logo-header {
+  width: 30px !important;
+}
+
 
   .botao-troca{
     display: inline-flex;
